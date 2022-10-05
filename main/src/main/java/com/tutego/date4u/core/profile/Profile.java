@@ -36,7 +36,7 @@ public class Profile {
     private Unicorn unicorn;
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Photo> photos = new ArrayList<>();
+    private final List<Photo> photos = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -44,7 +44,7 @@ public class Profile {
             joinColumns = @JoinColumn(name = "liker_fk"),
             inverseJoinColumns = @JoinColumn(name = "likee_fk")
     )
-    private Set<Profile> profilesThatILike = new HashSet<>();
+    private final Set<Profile> profilesThatILike = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -52,7 +52,7 @@ public class Profile {
             joinColumns = @JoinColumn(name = "likee_fk"),
             inverseJoinColumns = @JoinColumn(name = "liker_fk")
     )
-    private Set<Profile> profilesThatLikeMe = new HashSet<>();
+    private final Set<Profile> profilesThatLikeMe = new HashSet<>();
 
     protected Profile() {
     }

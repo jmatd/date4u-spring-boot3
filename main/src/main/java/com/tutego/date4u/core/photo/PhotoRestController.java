@@ -28,7 +28,7 @@ public class PhotoRestController {
 
     }
 
-    @GetMapping(path = "/api/photo/{imageName}",
+    @GetMapping(path = "/api/photos/{imageName}",
             produces = MediaType.IMAGE_JPEG_VALUE)
     public byte[] photo(@PathVariable("imageName") String imageName) {
 

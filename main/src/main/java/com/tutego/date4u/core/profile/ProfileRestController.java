@@ -51,7 +51,7 @@ public class ProfileRestController {
         profileRepository.save(profile);
 
         return ResponseEntity
-                .created(URI.create("api/photo/" + uploadName)).build();
+                .created(URI.create("api/photos/" + uploadName)).build();
     }
 
 
