@@ -1,4 +1,4 @@
-package com.tutego.date4u;
+package com.tutego.date4u.mvc.formdata;
 
 import org.springframework.format.annotation.DateTimeFormat;
 

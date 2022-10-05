@@ -1,5 +1,6 @@
-package com.tutego.date4u.core.profile;
+package com.tutego.date4u.core.unicorn;
 
+import com.tutego.date4u.core.profile.Profile;
 import jakarta.persistence.*;
 
 @Entity

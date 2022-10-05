@@ -1,6 +1,7 @@
 package com.tutego.date4u.core.profile;
 
 import com.tutego.date4u.core.photo.Photo;
+import com.tutego.date4u.core.unicorn.Unicorn;
 import jakarta.persistence.*;
 import org.springframework.lang.Nullable;
 

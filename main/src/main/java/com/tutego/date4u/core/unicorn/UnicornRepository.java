@@ -1,4 +1,4 @@
-package com.tutego.date4u.core.profile;
+package com.tutego.date4u.core.unicorn;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

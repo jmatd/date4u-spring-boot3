@@ -1,4 +1,4 @@
-package com.tutego.date4u.core;
+package com.tutego.date4u.statistics;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

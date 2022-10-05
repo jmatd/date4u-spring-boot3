@@ -1,7 +1,8 @@
-package com.tutego.date4u;
+package com.tutego.date4u.mvc.controllers;
 
 import com.tutego.date4u.core.profile.Profile;
 import com.tutego.date4u.core.profile.ProfileRepository;
+import com.tutego.date4u.mvc.formdata.ProfileFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

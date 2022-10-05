@@ -1,4 +1,4 @@
-package com.tutego.date4u.core;
+package com.tutego.date4u.statistics;
 
 import com.tutego.date4u.core.profile.ProfileRepository;
 import org.springframework.web.bind.annotation.GetMapping;
