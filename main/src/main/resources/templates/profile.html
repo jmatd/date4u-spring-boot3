@@ -1,13 +1,12 @@
 <!DOCTYPE HTML>
 <html>
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/quartz/bootstrap.min.css">
-</head>
+<div data-th-insert="header"></div>
 <body>
 <div class="jumbotron">
-    <h1 class="display-4" data-th-text="'Profile of ' + ${profile.nickname}"></h1>
+    <h1 class="display-4" data-th-text="'Profil von ' + ${profile.nickname}"></h1>
 
     <form data-th-object="${profile}" data-th-action="@{/save}" method="post">
+<!--        <fieldset disabled="disabled"> TODO CONDITIONAL-->
         <input type="text" data-th-field="*{id}" hidden>
         <div class="mb-3">
             <label for="nicknameInput" class="form-label">Nickname</label>
@@ -27,7 +26,7 @@
             </select>
         </div>
         <div class="mb-3">
-            <label for="attractedToGenderInput" class="form-label">Findet attraktiv</label>
+            <label for="attractedToGenderInput" class="form-label">Interesse am Geschlecht</label>
             <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
                    class="form-control">
         </div>
@@ -45,8 +44,10 @@
         </div>
 
         <button type="submit" class="btn btn-primary">Speichern</button>
+<!--        </fieldset>TODO CONDITIONAL--->
     </form>
 
 </div>
+<div data-th-insert="footer"></div>
 </body>
 </html>
