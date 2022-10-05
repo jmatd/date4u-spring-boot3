@@ -1,0 +1,18 @@
+            dddddddd
+            d::::::d                          tttt                                     444444444
+            d::::::d                       ttt:::t                                    4::::::::4
+            d::::::d                       t:::::t                                   4:::::::::4
+            d:::::d                        t:::::t                                  4::::44::::4
+    ddddddddd:::::d   aaaaaaaaaaaaa  ttttttt:::::ttttttt        eeeeeeeeeeee       4::::4 4::::4  uuuuuu    uuuuuu
+  dd::::::::::::::d   a::::::::::::a t:::::::::::::::::t      ee::::::::::::ee    4::::4  4::::4  u::::u    u::::u
+ d::::::::::::::::d   aaaaaaaaa:::::at:::::::::::::::::t     e::::::eeeee:::::ee 4::::4   4::::4  u::::u    u::::u
+d:::::::ddddd:::::d            a::::atttttt:::::::tttttt    e::::::e     e:::::e4::::444444::::444u::::u    u::::u
+d::::::d    d:::::d     aaaaaaa:::::a      t:::::t          e:::::::eeeee::::::e4::::::::::::::::4u::::u    u::::u
+d:::::d     d:::::d   aa::::::::::::a      t:::::t          e:::::::::::::::::e 4444444444:::::444u::::u    u::::u
+d:::::d     d:::::d  a::::aaaa::::::a      t:::::t          e::::::eeeeeeeeeee            4::::4  u::::u    u::::u
+d:::::d     d:::::d a::::a    a:::::a      t:::::t    tttttte:::::::e                     4::::4  u:::::uuuu:::::u
+d::::::ddddd::::::dda::::a    a:::::a      t::::::tttt:::::te::::::::e                    4::::4  u:::::::::::::::uu
+ d:::::::::::::::::da:::::aaaa::::::a      tt::::::::::::::t e::::::::eeeeeeee          44::::::44 u:::::::::::::::u
+  d:::::::::ddd::::d a::::::::::aa:::a       tt:::::::::::tt  ee:::::::::::::e          4::::::::4  uu::::::::uu:::u
+   ddddddddd   ddddd  aaaaaaaaaa  aaaa         ttttttttttt      eeeeeeeeeeeeee          4444444444    uuuuuuuu  uuuu
+

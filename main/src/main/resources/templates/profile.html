@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/quartz/bootstrap.min.css">
+</head>
+<body>
+<div class="jumbotron">
+    <h1 class="display-4" data-th-text="'Profile of ' + ${profile.nickname}"></h1>
+
+    <form data-th-object="${profile}" data-th-action="@{/save}" method="post">
+        <input type="text" data-th-field="*{id}" hidden>
+        <div class="mb-3">
+            <label for="nicknameInput" class="form-label">Nickname</label>
+            <input type="text" data-th-field="*{nickname}" id="nicknameInput"
+                   class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="hornlengthInput" class="form-label">Hornlänge</label>
+            <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
+                   class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="genderInput" class="form-label mb-3">Geschlecht</label>
+            <select class="form-select" data-th-field="*{gender}" id="genderInput">
+                <option th:value="1" th:text="FEE"></option>
+                <option th:value="2" th:text="MA"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="attractedToGenderInput" class="form-label">Findet attraktiv</label>
+            <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
+                   class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="birthdateInput" class="form-label">Geburtsdatum</label>
+            <input type="date" data-th-field="*{birthdate}" id="birthdateInput"
+                   class="form-control">
+        </div>
+
+        <div class="mb-3">
+            <label for="lastseenInput" class="form-label">Zuletzt gesehen</label>
+            <input type="text" data-th-field="*{lastseen}" id="lastseenInput"
+                   class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Speichern</button>
+    </form>
+
+</div>
+</body>
+</html>
