@@ -1,5 +1,6 @@
 package com.tutego.date4u.mvc.controllers.profile;
 
+import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
 import com.tutego.date4u.core.profile.ProfileRepository;
 import com.tutego.date4u.mvc.formdata.ProfileFormData;
@@ -56,7 +57,8 @@ public class ProfileWebController {
                         profile.getId(), profile.getNickname(), profile.getBirthdate(),
                         profile.getHornlength(), profile.getGender(),
                         profile.getAttractedToGender(), profile.getDescription(),
-                        profile.getLastseen()
+                        profile.getLastseen(),
+                        profile.getPhotos().stream().map( Photo::getName ).toList()
                 ));
 
         return "profile";

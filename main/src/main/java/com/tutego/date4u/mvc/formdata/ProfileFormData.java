@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ProfileFormData {
 
@@ -18,12 +19,14 @@ public class ProfileFormData {
     private String description;
     private LocalDateTime lastseen;
 
+    private List<String> photos;
+
     public ProfileFormData() {
     }
 
     public ProfileFormData(long id, String nickname,
                            LocalDate birthdate, int hornlength, int gender,
-                           Integer attractedToGender, String description, LocalDateTime lastseen) {
+                           Integer attractedToGender, String description, LocalDateTime lastseen, List<String> photos) {
         this.id = id;
         this.nickname = nickname;
         this.birthdate = birthdate;
@@ -32,6 +35,7 @@ public class ProfileFormData {
         this.attractedToGender = attractedToGender;
         this.description = description;
         this.lastseen = lastseen;
+        this.photos = photos;
     }
     // + Setter + Getter + toString()
 
@@ -99,6 +103,9 @@ public class ProfileFormData {
         this.lastseen = lastseen;
     }
 
+    public List<String> getPhotos() {
+        return photos;
+    }
     @Override
     public String toString() {
         return "ProfileFormData{" +
