@@ -1,5 +1,6 @@
 package com.tutego.date4u.mvc.formdata;
 
+import com.tutego.date4u.core.profile.Profile;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -7,30 +8,32 @@ import java.time.LocalDateTime;
 
 public class ProfileFormData {
 
- private long id;
- private String nickname;
- @DateTimeFormat( pattern = "yyyy-MM-dd" )
- private LocalDate birthdate;
- private int hornlength;
- private int gender;
- private Integer attractedToGender;
- private String description;
- private LocalDateTime lastseen;
+    private long id;
+    private String nickname;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthdate;
+    private int hornlength;
+    private int gender;
+    private Integer attractedToGender;
+    private String description;
+    private LocalDateTime lastseen;
 
- public ProfileFormData() { }
- public ProfileFormData( long id, String nickname,
-     LocalDate birthdate, int hornlength, int gender,
-     Integer attractedToGender, String description, LocalDateTime lastseen ) {
-   this.id = id;
-   this.nickname = nickname;
-   this.birthdate = birthdate;
-   this.hornlength = hornlength;
-   this.gender = gender;
-   this.attractedToGender = attractedToGender;
-   this.description = description;
-   this.lastseen = lastseen;
- }
-  // + Setter + Getter + toString()
+    public ProfileFormData() {
+    }
+
+    public ProfileFormData(long id, String nickname,
+                           LocalDate birthdate, int hornlength, int gender,
+                           Integer attractedToGender, String description, LocalDateTime lastseen) {
+        this.id = id;
+        this.nickname = nickname;
+        this.birthdate = birthdate;
+        this.hornlength = hornlength;
+        this.gender = gender;
+        this.attractedToGender = attractedToGender;
+        this.description = description;
+        this.lastseen = lastseen;
+    }
+    // + Setter + Getter + toString()
 
     public long getId() {
         return id;
