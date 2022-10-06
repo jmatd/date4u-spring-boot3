@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -52,13 +54,20 @@ public class ProfileWebController {
             return "redirect:/";
         }
         Profile profile = optionalProfile.get();
+
+        //sorts photos by isProfilePhoto boolean and makes profilePhoto first
+        List<String> photosWithFirstProfilPhoto = profile.getPhotos().stream()
+                .sorted(Comparator
+                        .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
+                .map(Photo::getName).toList();
+
         model.addAttribute("profile",
                 new ProfileFormData(
                         profile.getId(), profile.getNickname(), profile.getBirthdate(),
                         profile.getHornlength(), profile.getGender(),
                         profile.getAttractedToGender(), profile.getDescription(),
                         profile.getLastseen(),
-                        profile.getPhotos().stream().map( Photo::getName ).toList()
+                        photosWithFirstProfilPhoto
                 ));
 
         return "profile";
