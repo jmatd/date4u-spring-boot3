@@ -1,3 +1,12 @@
 .card-body{
     padding: 0.2rem 2rem !important;
 }
+
+
+img {
+    max-width:400px !important;
+    max-height:400px !important;
+    width:auto !important;
+    height:auto !important;
+
+}
