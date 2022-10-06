@@ -1,53 +1,88 @@
 <!DOCTYPE HTML>
 <html>
+<head>
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
 <div data-th-insert="header"></div>
 <body>
-<div class="jumbotron">
-    <h1 class="display-4" data-th-text="'Profil von ' + ${profile.nickname}"></h1>
-
-    <form data-th-object="${profile}" data-th-action="@{/save}" method="post">
 <!--        <fieldset disabled="disabled"> TODO CONDITIONAL-->
-        <input type="text" data-th-field="*{id}" hidden>
-        <div class="mb-3">
-            <label for="nicknameInput" class="form-label">Nickname</label>
-            <input type="text" data-th-field="*{nickname}" id="nicknameInput"
-                   class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="hornlengthInput" class="form-label">Hornlänge</label>
-            <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
-                   class="form-control">
-        </div>
-        <div class="mb-3">
-            <label for="genderInput" class="form-label mb-3">Geschlecht</label>
-            <select class="form-select" data-th-field="*{gender}" id="genderInput">
-                <option th:value="1" th:text="FEE"></option>
-                <option th:value="2" th:text="MA"></option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="attractedToGenderInput" class="form-label">Interesse am Geschlecht</label>
-            <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
-                   class="form-control">
-        </div>
+<div></div>
+<div class="col d-flex justify-content-center mt-3">
+    <div class="card mb-3" style="width: 45rem;">
+        <form data-th-object="${profile}" data-th-action="@{/save}" method="post">
+            <div class="card-header">
+                <h1 data-th-text="${profile.nickname}+ ', ALTER'">Unicorn</h1>
+                <h7 class="card-subtitle text-muted" data-th-text="'Zuletzt online vor '+ *{lastseen}"></h7>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200"
+                 aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice"
+                 viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                <rect width="100%" height="100%" fill="#868e96"></rect>
+                <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+            </svg>
+            <!--            TODO CONDITIONAL-->
+            <div class="card-body">
 
-        <div class="mb-3">
-            <label for="birthdateInput" class="form-label">Geburtsdatum</label>
-            <input type="date" data-th-field="*{birthdate}" id="birthdateInput"
-                   class="form-control">
-        </div>
+                <label for="nicknameInput" class="form-label">Nickname</label>
+                <input type="text" data-th-field="*{nickname}" id="nicknameInput"
+                       class="form-control">
 
-        <div class="mb-3">
-            <label for="lastseenInput" class="form-label">Zuletzt gesehen</label>
-            <input type="text" data-th-field="*{lastseen}" id="lastseenInput"
-                   class="form-control">
-        </div>
+            </div>
+            <div class="card-body">
 
-        <button type="submit" class="btn btn-primary">Speichern</button>
-<!--        </fieldset>TODO CONDITIONAL--->
-    </form>
+                <label for="descriptionInput" class="form-label">Beschreibung</label>
+                <input type="text" data-th-field="*{description}" id="descriptionInput"
+                       class="form-control">
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm">
+                        <label for="attractedToGenderInput" class="form-label">Interesse am Geschlecht</label>
+                        <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
+                               class="form-control">
+                    </div>
+                    <div class="col-sm">
+                        <label for="genderInput" class="form-label">Geschlecht</label>
+                        <select class="form-select" data-th-field="*{gender}" id="genderInput">
+                            <option th:value="1" th:text="FEE"></option>
+                            <option th:value="2" th:text="MA"></option>
+                        </select>
+                    </div>
 
+                </div>
+            </div>
+
+            <div class="card-body">
+                <label for="birthdateInput" class="form-label">Geburtsdatum</label>
+                <input type="date" data-th-field="*{birthdate}" id="birthdateInput"
+                       class="form-control">
+            </div>
+
+            <div class="card-body">
+
+                <label for="hornlengthInput" class="form-label">Hornlänge</label>
+                <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
+                       class="form-control">
+            </div>
+
+
+            <div class="card-footer text-muted">
+                2 days ago
+                <button type="submit" class="btn btn-primary">Speichern</button>
+
+            </div>
+            <!--        </fieldset>TODO CONDITIONAL--->
+        </form>
+    </div>
+    <!--            TODO like -->
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">LIKE</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+    </ul>
 </div>
+
+
 <div data-th-insert="footer"></div>
 </body>
 </html>
