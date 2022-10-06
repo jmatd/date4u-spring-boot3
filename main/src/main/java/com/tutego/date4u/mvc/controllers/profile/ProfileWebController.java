@@ -24,9 +24,24 @@ public class ProfileWebController {
     }
 
     @PostMapping("/save")
-    public String saveProfile(@ModelAttribute ProfileFormData profile) {
-        log.info(profile.toString());
-        return "redirect:/profile/" + profile.getId();
+    public String saveProfile(@ModelAttribute ProfileFormData profileFormData) {
+        Optional<Profile> optionalProfile = profileRepository.findById(profileFormData.getId());
+        //TODO error handling
+        if (optionalProfile.isEmpty()) {
+            return "redirect:/";
+        }
+        Profile profile = optionalProfile.get();
+
+        profile.setNickname(profileFormData.getNickname());
+        profile.setDescription(profileFormData.getDescription());
+        profile.setAttractedToGender(profileFormData.getAttractedToGender());
+        profile.setGender(profileFormData.getGender());
+        profile.setBirthdate(profileFormData.getBirthdate());
+        profile.setHornlength(profileFormData.getHornlength());
+
+        profileRepository.save(profile);
+
+        return "redirect:/profile/" + profileFormData.getId();
     }
 
     @RequestMapping("/profile/{id}")
@@ -46,4 +61,5 @@ public class ProfileWebController {
 
         return "profile";
     }
+
 }

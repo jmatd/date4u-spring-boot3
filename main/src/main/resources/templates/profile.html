@@ -10,6 +10,7 @@
 <div class="col d-flex justify-content-center mt-3">
     <div class="card mb-3" style="width: 45rem;">
         <form data-th-object="${profile}" data-th-action="@{/save}" method="post">
+            <input type="text" data-th-field="*{id}" hidden>
             <div class="card-header">
                 <h1 data-th-text="${profile.nickname}+ ', ALTER'">Unicorn</h1>
                 <h7 class="card-subtitle text-muted" data-th-text="'Zuletzt online vor '+ *{lastseen}"></h7>
@@ -64,7 +65,12 @@
                 <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
                        class="form-control">
             </div>
-
+<!--            todo make automatically change?-->
+            <div class="card-body">
+            <label for="lastseenInput" class="form-label">Zuletzt gesehen</label>
+            <input type="text" data-th-field="*{lastseen}" id="lastseenInput"
+                   class="form-control">
+            </div>
 
             <div class="card-footer text-muted">
                 2 days ago
