@@ -6,6 +6,8 @@ import com.tutego.date4u.core.profile.ProfileRepository;
 import com.tutego.date4u.mvc.formdata.ProfileFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,6 +56,10 @@ public class ProfileWebController {
             return "redirect:/";
         }
         Profile profile = optionalProfile.get();
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();// todo remove
+        log.info(auth.toString());  // TODO remove
+
 
         //sorts photos by isProfilePhoto boolean and makes profilePhoto first
         List<String> photosWithFirstProfilPhoto = profile.getPhotos().stream()
