@@ -34,6 +34,10 @@ public class ProfileRestController {
 
     @PostMapping("/api/profiles/{id}/photos/")
     public ResponseEntity<Photo> uploadImage(@PathVariable("id") long profileId, @RequestParam("file") MultipartFile file) {
+
+        Optional<Profile> optionalProfile = profileRepository.findById(profileId);
+        Profile profile = optionalProfile.orElseThrow(ProfileNotFoundException::new);
+
         byte[] fileBytes;
         try {
             fileBytes = file.getBytes();
@@ -42,8 +46,6 @@ public class ProfileRestController {
         }
 
         String uploadName = photoService.upload(fileBytes);
-        Optional<Profile> optionalProfile = profileRepository.findById(profileId);
-        Profile profile = optionalProfile.orElseThrow(ProfileNotFoundException::new);
 
         Photo photo = new Photo(null, profile, uploadName, false, LocalDateTime.now());
        // photoRepository.save(photo); // could be replaced with cascade = CascadeType.ALL in Profile > photo
