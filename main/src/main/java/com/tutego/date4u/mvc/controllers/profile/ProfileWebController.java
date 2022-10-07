@@ -4,14 +4,11 @@ import com.tutego.date4u.core.configuration.security.UnicornSecurityUser;
 import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
 import com.tutego.date4u.core.profile.ProfileRepository;
-import com.tutego.date4u.core.unicorn.Unicorn;
 import com.tutego.date4u.mvc.formdata.ProfileFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,9 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
-import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 
 @Controller

@@ -1,6 +1,5 @@
 package com.tutego.date4u.mvc.formdata;
 
-import com.tutego.date4u.core.profile.Profile;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
