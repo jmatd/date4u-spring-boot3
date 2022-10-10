@@ -31,15 +31,11 @@ public class Date4uWebController {
     public String indexPage(Model model) {
         long profileCount = profileRepository.count();
         model.addAttribute("totalProfiles", profileCount);
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();// todo remove
-        log.info(auth.toString());  // TODO remove
         return "index";
     }
 
     @RequestMapping("/search")
     public String searchPage(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();// todo remove
-        log.info(auth.toString());  // TODO remove
         List<Profile> allProfiles = profileRepository.findAll();
         model.addAttribute("profiles", allProfiles);
         return "search";

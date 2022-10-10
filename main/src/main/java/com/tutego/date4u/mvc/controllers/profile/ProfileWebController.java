@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import java.util.Comparator;
 import java.util.Optional;
 
@@ -31,7 +30,7 @@ public class ProfileWebController {
 
     @PostMapping("/save")
     public String saveProfile(@ModelAttribute ProfileFormData profileFormData, Authentication authentication) {
-        if(!userIdMatchesAuthorityId(profileFormData.getId(),authentication))
+        if (!userIdMatchesAuthorityId(profileFormData.getId(), authentication))
             throw new AccessDeniedException("User can only edit his own profile"); // Error code 403
 
         Optional<Profile> optionalProfile = profileRepository.findById(profileFormData.getId());
@@ -48,12 +47,12 @@ public class ProfileWebController {
 
         profileRepository.save(profile);
 
-        return "redirect:/profile/" + profileFormData.getId();
+        return "redirect:/profile";
     }
 
     @RequestMapping("/profile")
-    public String ownProfilePage(Authentication authentication){
-        return "redirect:/profile/"+ ((UnicornSecurityUser)authentication.getPrincipal()).getId();
+    public String ownProfilePage(Authentication authentication) {
+        return "redirect:/profile/" + ((UnicornSecurityUser) authentication.getPrincipal()).getId();
     }
 
     @RequestMapping("/profile/{id}")
@@ -69,17 +68,17 @@ public class ProfileWebController {
         log.info("isOwnprofile" + isOwnProfile);
 
         model.addAttribute("profile",
-                new ProfileFormData(
-                        profile.getId(), profile.getNickname(), profile.getBirthdate(),
-                        profile.getHornlength(), profile.getGender(),
-                        profile.getAttractedToGender(), profile.getDescription(),
-                        profile.getLastseen(),
-                        profile.getPhotos().stream()
-                                .sorted(Comparator
-                                        //sorts photos by isProfilePhoto boolean and sets profilePhoto first
-                                        .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
-                                .map(Photo::getName).toList()
-                ))
+                        new ProfileFormData(
+                                profile.getId(), profile.getNickname(), profile.getBirthdate(),
+                                profile.getHornlength(), profile.getGender(),
+                                profile.getAttractedToGender(), profile.getDescription(),
+                                profile.getLastseen(),
+                                profile.getPhotos().stream()
+                                        .sorted(Comparator
+                                                //sorts photos by isProfilePhoto boolean and sets profilePhoto first
+                                                .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
+                                        .map(Photo::getName).toList()
+                        ))
                 .addAttribute("isOwnProfile", isOwnProfile);
         return "profile";
     }
