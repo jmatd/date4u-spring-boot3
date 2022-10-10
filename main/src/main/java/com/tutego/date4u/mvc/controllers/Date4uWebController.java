@@ -21,6 +21,12 @@ public class Date4uWebController {
         this.profileRepository = profileRepository;
     }
 
+
+    @RequestMapping("/login")
+    public String loginPage() {
+        return "login";
+    }
+
     @RequestMapping("/")
     public String indexPage(Model model) {
         long profileCount = profileRepository.count();

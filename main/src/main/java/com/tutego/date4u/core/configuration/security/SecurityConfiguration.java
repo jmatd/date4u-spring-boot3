@@ -17,10 +17,13 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((auth) -> auth
-                        //.mvcMatchers("/search").permitAll()
                         .anyRequest().authenticated()
-                )
-                .formLogin(Customizer.withDefaults());
+                                .and())
+
+                .formLogin()
+                    .loginPage("/login")
+                     .defaultSuccessUrl("/", true)
+                     .permitAll();
         return http.build();
     }
 

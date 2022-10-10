@@ -32,13 +32,11 @@ public class ProfileWebController {
     @PostMapping("/save")
     public String saveProfile(@ModelAttribute ProfileFormData profileFormData, Authentication authentication) {
         if(!userIdMatchesAuthorityId(profileFormData.getId(),authentication))
-            throw new AccessDeniedException("User can edit only his own profile"); // Error code 403
+            throw new AccessDeniedException("User can only edit his own profile"); // Error code 403
 
         Optional<Profile> optionalProfile = profileRepository.findById(profileFormData.getId());
         //TODO error handling
-        if (optionalProfile.isEmpty()) {
-            return "redirect:/";
-        }
+        if (optionalProfile.isEmpty()) return "redirect:/";
         Profile profile = optionalProfile.get();
 
         profile.setNickname(profileFormData.getNickname());
@@ -60,12 +58,9 @@ public class ProfileWebController {
 
     @RequestMapping("/profile/{id}")
     public String profilePage(@PathVariable long id, Model model, Authentication authentication) {
-        System.out.println(id);
 
         Optional<Profile> optionalProfile = profileRepository.findById(id);
-
         if (optionalProfile.isEmpty()) return "redirect:/";
-
         Profile profile = optionalProfile.get();
 
         boolean isOwnProfile = userIdMatchesAuthorityId(id, authentication);
