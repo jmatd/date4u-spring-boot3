@@ -9,6 +9,9 @@
     color: #fff !important;
 }
 
-.card.input{
-    max-width: 100px;
+.card.mini{
+    max-width: 290px;
+}
+.card.mini > .card-body, .card-header{
+    padding: 0;
 }

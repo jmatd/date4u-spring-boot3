@@ -66,29 +66,15 @@
 </div>
 
 
-<div data-th-insert="cards :: mini-card"></div>
+<div class="container">
+    <div class="d-flex flex-wrap">
 
+        <div data-th-each="profileDto: ${profiles}" class="p-2 bd-highlight" data-th-attr="onclick='location.href=\'/profile/'+ ${profileDto.profile.id}+'\''"  style="cursor: pointer;" >
 
-
-
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">Nickname</th>
-        <th scope="col">Hornlength</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr data-th-each="profile,iterationStatus : ${profiles}">
-        <td data-th-text="${profile.id}"></td>
-        <td data-th-text="${profile.nickname}"></td>
-        <td data-th-text="${profile.hornlength}"></td>
-        <td data-th-text="${profile.description}"></td>
-    </tr>
-    </tbody>
-</table>
-
+            <div data-th-insert="cards :: mini-card"></div>
+        </div>
+    </div>
+</div>
 
 <div data-th-insert="footer"></div>
 </body>

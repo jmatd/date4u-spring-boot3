@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+
+<div class="card mini" data-th-fragment="mini-card">
+    <div class="card-header">
+        <img class="rounded mx-auto d-block mb-0"
+             data-th-src="@{/api/photos/{id}(id=${profileDto.profileImageName})}"
+             alt="profile Image">
+
+    </div>
+    <div class="card-body">
+        <h3 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.profile.birthdate}"></h3>
+        <p data-th-text="'Horn: ' +${profileDto.profile.hornlength} + ' cm'"></p>
+    </div>
+
+</div>
+
+
+</body>
+</html>
