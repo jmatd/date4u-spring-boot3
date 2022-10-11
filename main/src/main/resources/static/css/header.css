@@ -8,3 +8,7 @@
     overflow: hidden !important;
     color: #fff !important;
 }
+
+.card.input{
+    max-width: 100px;
+}
