@@ -36,7 +36,7 @@ public class Profile {
     private Unicorn unicorn;
 
     @OneToMany(mappedBy = "profile", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private final List<Photo> photos = new ArrayList<>();
+    private List<Photo> photos = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -139,6 +139,10 @@ public class Profile {
 
     public List<Photo> getPhotos() {
         return photos;
+    }
+
+    public void setPhotos(List<Photo> photos){
+        this.photos = photos;
     }
 
     public Profile add(Photo photo) {
