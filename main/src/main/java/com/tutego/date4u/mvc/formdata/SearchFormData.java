@@ -1,10 +1,10 @@
 package com.tutego.date4u.mvc.formdata;
 
 public class SearchFormData {
-    private int minimumAge;
-    private int maximumAge;
-    private int minimumHornlength;
-    private int maximumHornlength;
+    private int minimumAge = 18;
+    private int maximumAge = 99;
+    private int minimumHornlength = 0;
+    private int maximumHornlength = 100;
     private int gender;
 
 
@@ -57,5 +57,16 @@ public class SearchFormData {
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchFormData{" +
+                "minimumAge=" + minimumAge +
+                ", maximumAge=" + maximumAge +
+                ", minimumHornlength=" + minimumHornlength +
+                ", maximumHornlength=" + maximumHornlength +
+                ", gender=" + gender +
+                '}';
     }
 }

@@ -34,10 +34,5 @@ public class Date4uWebController {
         return "index";
     }
 
-    @RequestMapping("/search")
-    public String searchPage(Model model) {
-        List<Profile> allProfiles = profileRepository.findAll();
-        model.addAttribute("profiles", allProfiles);
-        return "search";
-    }
+
 }
