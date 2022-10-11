@@ -64,9 +64,6 @@ public class ProfileWebController {
 
         boolean isOwnProfile = userIdMatchesAuthorityId(id, authentication);
 
-        log.info(authentication.toString()); //todo remove
-        log.info("isOwnprofile" + isOwnProfile);
-
         model.addAttribute("profile",
                         new ProfileFormData(
                                 profile.getId(), profile.getNickname(), profile.getBirthdate(),
