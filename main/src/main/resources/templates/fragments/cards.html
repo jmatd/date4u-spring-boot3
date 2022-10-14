@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" lang="en">
 
 <body>
 
@@ -12,10 +12,10 @@
 
     </div>
     <div class="card-body">
-        <h3 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.profile.birthdate}"></h3>
+        <div data-th-replace="fragments/genders :: ${profileDto.profile.gender}"></div>
+        <h3 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.ageInYears}"></h3>
         <p data-th-text="'Horn: ' +${profileDto.profile.hornlength} + ' cm'"></p>
     </div>
-
 </div>
 
 
