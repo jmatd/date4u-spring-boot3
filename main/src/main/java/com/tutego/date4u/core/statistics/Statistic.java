@@ -1,4 +1,4 @@
-package com.tutego.date4u.statistics;
+package com.tutego.date4u.core.statistics;
 
 import com.tutego.date4u.core.event.NewPhotoEvent;
 import org.slf4j.Logger;
