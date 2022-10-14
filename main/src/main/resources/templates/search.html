@@ -71,7 +71,7 @@
 
         <div data-th-each="profileDto: ${profiles}" class="p-2 bd-highlight" data-th-attr="onclick='location.href=\'/profile/'+ ${profileDto.profile.id}+'\''"  style="cursor: pointer;" >
 
-            <div data-th-insert="cards :: mini-card"></div>
+            <div data-th-insert="fragments/cards :: mini-card"></div>
         </div>
     </div>
 </div>
