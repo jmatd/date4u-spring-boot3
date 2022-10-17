@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 
 <body>
 
 
 <div class="card mini" data-th-fragment="mini-card">
     <div class="card-header">
-        <img class="rounded mx-auto d-block mb-0"
+        <img class="rounded mx-auto d-block m-0"
              data-th-src="@{/api/photos/{id}(id=${profileDto.profileImageName})}"
              alt="profile Image">
 
     </div>
-    <div class="card-body">
-        <div data-th-replace="fragments/genders :: ${profileDto.profile.gender}"></div>
-        <h3 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.ageInYears}"></h3>
-        <p data-th-text="'Horn: ' +${profileDto.profile.hornlength} + ' cm'"></p>
+    <div class="card-body mx-1">
+
+        <h3>
+            <div data-th-replace="fragments/genders :: ${profileDto.profile.gender}"></div>
+            <div data-th-remove="tag"
+                 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.ageInYears}"></div>
+        </h3>
+
+
+        <h5>
+            <img data-th-src="@{images/horn.svg}"  alt="HornImage"/>
+             <p data-th-remove="tag" data-th-text="'&nbsp;'+${profileDto.profile.hornlength} + ' cm'"></p>
+        </h5>
     </div>
 </div>
 

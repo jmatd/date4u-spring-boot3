@@ -66,10 +66,10 @@
 </div>
 
 
-<div class="container">
-    <div class="d-flex flex-wrap">
+<div class="container-xxl">
+    <div class="d-flex flex-wrap justify-content-center">
 
-        <div data-th-each="profileDto: ${profiles}" class="p-2 bd-highlight" data-th-attr="onclick='location.href=\'/profile/'+ ${profileDto.profile.id}+'\''"  style="cursor: pointer;" >
+        <div data-th-each="profileDto: ${profiles}" class="p-1" data-th-attr="onclick='location.href=\'/profile/'+ ${profileDto.profile.id}+'\''"  style="cursor: pointer;" >
 
             <div data-th-insert="fragments/cards :: mini-card"></div>
         </div>

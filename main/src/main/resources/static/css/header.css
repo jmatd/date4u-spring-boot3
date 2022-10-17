@@ -10,8 +10,20 @@
 }
 
 .card.mini{
-    max-width: 290px;
+    width: 308px;
 }
 .card.mini > .card-body, .card-header{
     padding: 0;
+}
+
+.card.mini > .card-body >*> svg, img{
+    margin: 5px 0 5px 5px;
+}
+.card.mini>.card-body> h1,h2,h3,h4,h5{
+    margin-bottom:0;
+}
+
+.card.mini>.card-header> img{
+    height: 100%;
+    width: 100%;
 }
