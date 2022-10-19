@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:sec="http://www.w3.org/1999/xhtml">
 
 
 <head data-th-fragement="head">
@@ -33,9 +33,22 @@
                 </li>
             </ul>
 
+
+                   <div class="d-flex" sec:authorize="isAuthenticated()">
+                        <form id="logoutForm" method="POST" th:action="@{/logout}">
+                            <button type="submit" class="btn btn-secondary" value="Logout">Logout</button>
+                        </form>
+                        </div>
+
+
+
+            </ul>
+
         </div>
     </div>
 </nav>
+
+
 
 </body>
 </html>

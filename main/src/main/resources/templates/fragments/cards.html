@@ -9,7 +9,6 @@
         <img class="rounded mx-auto d-block m-0"
              data-th-src="@{/api/photos/{id}(id=${profileDto.profileImageName})}"
              alt="profile Image">
-
     </div>
     <div class="card-body mx-1">
 
@@ -21,12 +20,182 @@
 
 
         <h5>
-            <img data-th-src="@{images/horn.svg}"  alt="HornImage"/>
-             <p data-th-remove="tag" data-th-text="'&nbsp;'+${profileDto.profile.hornlength} + ' cm'"></p>
+            <img data-th-src="@{/images/horn.svg}" alt="HornImage"/>
+            <p data-th-remove="tag" data-th-text="'&nbsp;'+${profileDto.profile.hornlength} + ' cm'"></p>
         </h5>
     </div>
 </div>
 
+
+<div class="card profile" data-th-fragment="profileCard">
+    <div class="card-header">
+        <h1 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.ageInYears}"></h1>
+        <h7 class="card-subtitle text-muted" data-th-text="'Zuletzt online vor '+ *{lastseen}"></h7>
+    </div>
+    <div class="card-body ">
+        <div data-th-replace="fragments/cards :: carouselInCard"></div>
+
+        <h4>
+            <div data-th-replace="fragments/genders :: ${profileDto.profile.gender}"></div>
+            <div data-th-remove="tag" data-th-switch="${profileDto.profile.gender}">
+                <div data-th-remove="tag" data-th-case="'1'">Männlich</div>
+                <div data-th-remove="tag" data-th-case="'0'">Weiblich</div>
+                <div data-th-remove="tag" data-th-case="*">Divers</div>
+            </div>
+
+            <img data-th-src="@{/images/horn.svg}" alt="HornImage"/>
+            <p data-th-remove="tag" data-th-text="'&nbsp;'+${profileDto.profile.hornlength} + ' cm'"></p>
+        </h4>
+        <h4>
+            <img data-th-src="@{/images/birthday.svg}" alt="birthday"/>
+            <h4 data-th-remove="tag"
+                data-th-text="${#temporals.format(profileDto.profile.birthdate, 'dd.MM.yyyy')}"></h4>
+        </h4>
+
+        <blockquote class="blockquote">
+            <p class="mb-0" data-th-text="${profileDto.profile.description}">Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Integer posuere erat a ante.</p>
+        </blockquote>
+    </div>
+</div>
+
+
+<div data-th-fragment="carouselInCard" id="carouselInCard" class="carousel slide" data-bs-interval="false">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselInCard"
+                th:each="photo,iterationStatus:  ${profileDto.profile.photos}"
+                th:attr="data-bs-slide-to=${iterationStatus.index},
+                                class=${iterationStatus.first}?'active',
+                                 aria-current=${iterationStatus.first}?'true':''"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div th:each="photo,iterationStatus:  ${profileDto.profile.photos}" class="carousel-item"
+             th:classappend="(${iterationStatus.first} ? 'active': '')">
+            <img class="w-100 rounded mx-auto d-block mb-4"
+                 th:src="@{/api/photos/{id}(id=${photo.name})}"
+                 th:alt="${iterationStatus.index}">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselInCard"
+            data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Zurück</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselInCard"
+            data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Vor</span>
+    </button>
+</div>
+
+
+<div class="p-2 ms-auto" id="editCard" data-th-fragment="editCard">
+
+    <div class="card mb-3" >
+        <form data-th-object="${profileForm}" data-th-action="@{/save}" method="post">
+            <input type="text" data-th-field="*{id}" hidden>
+            <div class="card-header">
+                <h1>Bearbeiten</h1>
+            </div>
+            <div class="card-body">
+
+                <div class="form-floating mb-2">
+                    <input type="text" data-th-field="*{nickname}" id="nicknameInput"
+                           class="form-control" placeholder="aSpecialUnicorn">
+                    <label for="nicknameInput" class="form-label">Nickname</label>
+                </div>
+
+                <div class="form-floating mb-2">
+                            <textarea class="form-control" maxlength="2048" data-th-field="*{description}"
+                                      id="descriptionInput" rows="4" placeholder="Beschreibung"></textarea>
+                    <label for="descriptionInput">Beschreibung</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <p style=" margin:0; font-size: 1rem;">Interesse an Geschlecht</p>
+                        <div class="btn-group mb-2" role="group" aria-label="Gender radio button group">
+                            <input type="radio" data-th-field="*{attractedToGender}" th:value="0"
+                                   class="btn-check"
+                                   name="btnradio" id="attractedToFemale" autocomplete="off"
+                                   th:checked="*{gender eq 0}">
+                            <label class="btn btn-primary" for="attractedToFemale">Weiblich</label>
+
+                            <input type="radio" data-th-field="*{attractedToGender}" th:value="1"
+                                   class="btn-check"
+                                   name="btnradio" id="attractedToMale" autocomplete="off"
+                                   th:checked="*{gender eq 1}">
+                            <label class="btn btn-primary" for="attractedToMale">Männlich</label>
+
+                            <input type="radio" data-th-field="*{attractedToGender}" th:value="2"
+                                   class="btn-check"
+                                   name="btnradio" id="attractedToDivers" autocomplete="off"
+                                   th:checked="*{gender eq 2}">
+                            <label class="btn btn-primary" for="attractedToDivers">Divers</label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm">
+                        <p style=" margin:0; font-size: 1rem;">Geschlecht</p>
+                        <div class="btn-group mb-2" role="group" aria-label="Gender radio button group">
+                            <input type="radio" data-th-field="*{gender}" th:value="0" class="btn-check"
+                                   name="btnradio" id="female" autocomplete="off"
+                                   th:checked="*{gender eq 0}">
+                            <label class="btn btn-primary" for="female">Weiblich</label>
+
+                            <input type="radio" data-th-field="*{gender}" th:value="1" class="btn-check"
+                                   name="btnradio" id="male" autocomplete="off" th:checked="*{gender eq 1}">
+                            <label class="btn btn-primary" for="male">Männlich</label>
+
+                            <input type="radio" data-th-field="*{gender}" th:value="2" class="btn-check"
+                                   name="btnradio" id="divers" autocomplete="off"
+                                   th:checked="*{gender eq 2}">
+                            <label class="btn btn-primary" for="divers">Divers</label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-floating mb-2">
+                            <input type="date" data-th-field="*{birthdate}" id="birthdateInput"
+                                   class="form-control" placeholder="01.01.1900">
+                            <label for="birthdateInput" class="form-label">Geburtsdatum</label>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="form-floating mb-2">
+
+                            <input type="number" data-th-field="*{hornlength}" id="hornlengthInput"
+                                   class="form-control" placeholder="0">
+                            <label for="hornlengthInput" class="form-label">Hornlänge</label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <!--            todo make automatically change?-->
+
+
+                <input hidden type="text" data-th-field="*{lastseen}" id="lastseenInput"
+                       class="form-control">
+            </div>
+
+            <div class="card-footer text-muted">
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                </div>
+            </div>
+            <!--        </fieldset>TODO CONDITIONAL--->
+        </form>
+
+    </div>
+</div>
 
 </body>
 </html>

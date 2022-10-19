@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <link rel="stylesheet" href="../css/profile.css">
     <title>Profile</title>
@@ -7,115 +7,48 @@
 <div data-th-insert="header"></div>
 <body>
 <!--        <fieldset disabled="disabled"> TODO CONDITIONAL-->
-<div></div>
-<div class="col d-flex justify-content-center mt-3">
-    <div class="card mb-3" style="width: 45rem;">
-        <form data-th-object="${profile}" data-th-action="@{/save}" method="post">
-            <input type="text" data-th-field="*{id}" hidden>
-            <div class="card-header">
-                <h1 data-th-text="${profile.nickname}+ ', ALTER'">Unicorn</h1>
-                <h7 class="card-subtitle text-muted" data-th-text="'Zuletzt online vor '+ *{lastseen}"></h7>
-            </div>
 
+<div class="container mt-2">
+    <div data-th-if="${isOwnProfile}" >
+    <h4>Preview</h4>
+    <ul  class="nav nav-tabs" role="tablist">
 
-            <div class="card-body">
-                <div id="carouselInCard" class="carousel slide" data-bs-interval="false">
-                    <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#carouselInCard"
-                                th:each="photo,iterationStatus:  ${profile.photos}"
-                                th:attr="data-bs-slide-to=${iterationStatus.index},
-                                class=${iterationStatus.first}?'active',
-                                 aria-current=${iterationStatus.first}?'true':''"></button>
-                    </div>
-
-                    <div class="carousel-inner">
-                        <div th:each="photo,iterationStatus:  ${profile.photos}" class="carousel-item"
-                             th:classappend="(${iterationStatus.first} ? 'active': '')">
-                            <img class="rounded mx-auto d-block mb-4" th:src="@{/api/photos/{id}(id=${photo})}"
-                                 th:alt="${iterationStatus.index}">
-                        </div>
-                    </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselInCard"
-                            data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselInCard"
-                            data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
-                </div>
-
-            </div>
-            <!--            TODO CONDITIONAL-->
-            <div class="card-body">
-
-                <label for="nicknameInput" class="form-label">Nickname</label>
-                <input type="text" data-th-field="*{nickname}" id="nicknameInput"
-                       class="form-control">
-
-            </div>
-            <div class="card-body">
-
-                <label for="descriptionInput" class="form-label">Beschreibung</label>
-                <input type="text" data-th-field="*{description}" id="descriptionInput"
-                       class="form-control">
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-sm">
-                        <label for="attractedToGenderInput" class="form-label">Interesse am Geschlecht</label>
-                        <input type="text" data-th-field="*{attractedToGender}" id="attractedToGenderInput"
-                               class="form-control">
-                    </div>
-                    <div class="col-sm">
-                        <label for="genderInput" class="form-label">Geschlecht</label>
-                        <select class="form-select" data-th-field="*{gender}" id="genderInput">
-                            <option th:value="1" th:text="FEE"></option>
-                            <option th:value="2" th:text="MA"></option>
-                        </select>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="card-body">
-                <label for="birthdateInput" class="form-label">Geburtsdatum</label>
-                <input type="date" data-th-field="*{birthdate}" id="birthdateInput"
-                       class="form-control">
-            </div>
-
-            <div class="card-body">
-
-                <label for="hornlengthInput" class="form-label">Hornlänge</label>
-                <input type="text" data-th-field="*{hornlength}" id="hornlengthInput"
-                       class="form-control">
-            </div>
-            <!--            todo make automatically change?-->
-            <div class="card-body">
-                <label for="lastseenInput" class="form-label">Zuletzt gesehen</label>
-                <input type="text" data-th-field="*{lastseen}" id="lastseenInput"
-                       class="form-control">
-            </div>
-
-            <div class="card-footer text-muted">
-                2 days ago
-                <button type="submit" class="btn btn-primary">Speichern</button>
-
-            </div>
-            <!--        </fieldset>TODO CONDITIONAL--->
-        </form>
-    </div>
-    <!--            TODO like -->
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">LIKE</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" data-bs-toggle="tab" href="#card" aria-selected="false" role="tab"
+               tabindex="-1">Card</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" data-bs-toggle="tab" href="#miniCard" aria-selected="true" role="tab">Mini
+                Card</a>
+        </li>
     </ul>
+    </div>
+    <div class="d-flex flex-row justify-content-center">
+        <div class="p-2" id="previewCard">
+            <div id="previewCardContent" class="tab-content">
+                <div class="tab-pane fade active show" id="card" role="tabpanel">
+                    <div data-th-replace="fragments/cards :: profileCard"></div>
+                </div>
+                <div class="tab-pane fade" id="miniCard" role="tabpanel">
+                    <div data-th-replace="fragments/cards :: mini-card"></div>
+                </div>
+            </div>
+        </div>
+
+        <div data-th-if="${isOwnProfile}" data-th-insert="fragments/cards :: editCard"></div>
+
+
+
+    </div>
+    <!--    &lt;!&ndash;            TODO like &ndash;&gt;-->
+    <!--    <ul class="list-group list-group-flush">-->
+    <!--        <li class="list-group-item">LIKE</li>-->
+    <!--        <li class="list-group-item">Dapibus ac facilisis in</li>-->
+    <!--        <li class="list-group-item">Vestibulum at eros</li>-->
+    <!--    </ul>-->
+
+
 </div>
-
-
 <div data-th-insert="footer"></div>
 </body>
 </html>

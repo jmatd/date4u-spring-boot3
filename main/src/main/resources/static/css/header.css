@@ -7,23 +7,64 @@
     position: relative !important;
     overflow: hidden !important;
     color: #fff !important;
+    font-weight: 700;
+    font-size: 1.4rem;
 }
 
-.card.mini{
+.card.mini {
     width: 308px;
 }
-.card.mini > .card-body, .card-header{
+
+.card.mini > .card-body, .card.mini > .card-header {
     padding: 0;
 }
 
-.card.mini > .card-body >*> svg, img{
-    margin: 5px 0 5px 5px;
-}
-.card.mini>.card-body> h1,h2,h3,h4,h5{
-    margin-bottom:0;
+.card.mini > .card-body > * > svg, img, .card > .card-body > * > svg, img {
+    margin: 5px 0 5px 5px !important;
 }
 
-.card.mini>.card-header> img{
+/*#carouselInCard > div.carousel-inner > div.carousel-item> img{*/
+/*     width:450px;*/
+/*     height:450px;*/
+/* }*/
+
+#previewCard {
+    flex: 0 0 500px;
+}
+
+#descriptionInput {
+    height: 110px;
+}
+
+
+.card.mini, .card > .card-body > h1, h2, h3, h4, h5 {
+    margin-bottom: 0;
+}
+
+.card.mini > .card-header > img {
     height: 100%;
     width: 100%;
+}
+
+.btn-group > .btn {
+    padding: 12px 10px 12px 10px;
+}
+
+.card-header h1 {
+    margin: 0;
+}
+
+#previewCard .card-body {
+    text-align: center;
+    padding: 0 1rem 0 1rem;
+}
+
+#previewCard .card-header {
+
+    padding-bottom: 0px;
+
+}
+
+#previewCard .carousel-item {
+    padding: 0 3rem;
 }

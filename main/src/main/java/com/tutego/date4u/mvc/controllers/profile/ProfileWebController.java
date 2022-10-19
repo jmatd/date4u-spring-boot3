@@ -4,6 +4,8 @@ import com.tutego.date4u.core.configuration.security.UnicornSecurityUser;
 import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
 import com.tutego.date4u.core.profile.ProfileRepository;
+import com.tutego.date4u.core.profile.ProfileService;
+import com.tutego.date4u.mvc.dto.ProfileDto;
 import com.tutego.date4u.mvc.formdata.ProfileFormData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,9 +25,11 @@ import java.util.Optional;
 public class ProfileWebController {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final ProfileRepository profileRepository;
+    private final ProfileService profileService;
 
-    public ProfileWebController(ProfileRepository profileRepository) {
+    public ProfileWebController(ProfileRepository profileRepository, ProfileService profileService) {
         this.profileRepository = profileRepository;
+        this.profileService = profileService;
     }
 
     @PostMapping("/save")
@@ -63,19 +67,24 @@ public class ProfileWebController {
         Profile profile = optionalProfile.get();
 
         boolean isOwnProfile = userIdMatchesAuthorityId(id, authentication);
+        ProfileDto profileDto = profileService.getProfileDtoFromProfile(profile);
+        if (isOwnProfile) {
+            model.addAttribute("profileForm",
+                    new ProfileFormData(
+                            profile.getId(), profile.getNickname(), profile.getBirthdate(),
+                            profile.getHornlength(), profile.getGender(),
+                            profile.getAttractedToGender(), profile.getDescription(),
+                            profile.getLastseen(),
+                            profile.getPhotos().stream()
+                                    .sorted(Comparator
+                                            //sorts photos by isProfilePhoto boolean and sets profilePhoto first
+                                            .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
+                                    .map(Photo::getName).toList()
+                    ));
+        }
 
-        model.addAttribute("profile",
-                        new ProfileFormData(
-                                profile.getId(), profile.getNickname(), profile.getBirthdate(),
-                                profile.getHornlength(), profile.getGender(),
-                                profile.getAttractedToGender(), profile.getDescription(),
-                                profile.getLastseen(),
-                                profile.getPhotos().stream()
-                                        .sorted(Comparator
-                                                //sorts photos by isProfilePhoto boolean and sets profilePhoto first
-                                                .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
-                                        .map(Photo::getName).toList()
-                        ))
+        model
+                .addAttribute("profileDto", profileDto)
                 .addAttribute("isOwnProfile", isOwnProfile);
         return "profile";
     }

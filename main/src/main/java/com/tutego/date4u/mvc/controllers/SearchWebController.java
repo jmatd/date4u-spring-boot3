@@ -7,6 +7,7 @@ import com.tutego.date4u.core.profile.ProfileService;
 import com.tutego.date4u.core.profile.SearchFilter;
 import com.tutego.date4u.mvc.dto.ProfileDto;
 import com.tutego.date4u.mvc.formdata.SearchFormData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,9 +56,4 @@ public class SearchWebController {
                 maxBirthdate
         );
     }
-
-//    @PostMapping("/search")
-//    public String search(Model model,@ModelAttribute SearchFormData searchFormData){
-//
-//    }
 }
