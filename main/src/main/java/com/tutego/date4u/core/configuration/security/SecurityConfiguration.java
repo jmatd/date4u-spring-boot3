@@ -1,16 +1,13 @@
 package com.tutego.date4u.core.configuration.security;
 
-import jakarta.servlet.http.HttpSessionEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
-
-import java.util.Enumeration;
+import org.springframework.security.web.authentication.logout.ForwardLogoutSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -22,16 +19,19 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .anyRequest().authenticated()
-                                .and())
+                        .and())
 
                 .formLogin()
-                    .loginPage("/login")
-                     .defaultSuccessUrl("/", true)
-                     .permitAll()
+                .loginPage("/login")
+                .defaultSuccessUrl("/", true)
+                .permitAll()
+                .and()
+                .logout()
+                    .permitAll()
                 .and()
                 .sessionManagement(session -> session
                         .maximumSessions(1)
-        );
+                );
         return http.build();
     }
 
