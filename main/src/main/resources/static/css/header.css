@@ -54,17 +54,35 @@
     margin: 0;
 }
 
-#previewCard .card-body {
+.card.profile .card-body {
     text-align: center;
     padding: 0 1rem 0 1rem;
 }
 
-#previewCard .card-header {
+.card.profile .card-header {
 
     padding-bottom: 0px;
 
 }
 
-#previewCard .carousel-item {
+.card.profile .carousel-item {
     padding: 0 3rem;
+}
+
+
+.modal-body{
+    padding: 0;
+}
+.carousel-indicators{
+    margin-bottom: 0;
+}
+
+.modal-body > .card.profile{
+    backdrop-filter: blur(15px);
+    background-color: rgba(197, 57, 133, 0.11);
+}
+
+#miniCardButton{
+    padding:0;
+    border:0;
 }

@@ -69,13 +69,25 @@
 <div class="container-xxl">
     <div class="d-flex flex-wrap justify-content-center">
 
-        <div data-th-each="profileDto: ${profiles}" class="p-1" data-th-attr="onclick='location.href=\'/profile/'+ ${profileDto.profile.id}+'\''"  style="cursor: pointer;" >
-
-            <div data-th-insert="fragments/cards :: mini-card"></div>
+        <div data-th-each="profileDto: ${profiles}" class="p-1">
+            <button type="button" id="miniCardButton" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                    data-th-data-bs-target="'#profile-'+${profileDto.profile.id}">
+                <div data-th-insert="fragments/cards :: mini-card"></div>
+            </button>
+            <div class="modal fade" data-th-id="'profile-'+${profileDto.profile.id}" tabindex="-1"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div data-th-replace="fragments/cards :: profileCard"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<div data-th-insert="footer"></div>
+
+    <div data-th-insert="footer"></div>
 </body>
 </html>

@@ -27,10 +27,11 @@
 </div>
 
 
+
 <div class="card profile" data-th-fragment="profileCard">
     <div class="card-header">
         <h1 data-th-text="${profileDto.profile.nickname}+ ', '+${profileDto.ageInYears}"></h1>
-        <h7 class="card-subtitle text-muted" data-th-text="'Zuletzt online vor '+ *{lastseen}"></h7>
+        <h7 class="card-subtitle text-muted" data-th-text="'Zuletzt online '+ ${profileDto.humanReadablyLastSeen}"></h7>
     </div>
     <div class="card-body ">
         <div data-th-replace="fragments/cards :: carouselInCard"></div>
@@ -59,10 +60,9 @@
     </div>
 </div>
 
-
-<div data-th-fragment="carouselInCard" id="carouselInCard" class="carousel slide" data-bs-interval="false">
+<div data-th-fragment="carouselInCard" data-th-id="'carouselInCard'+${profileDto.profile.id}" class="carousel slide" data-bs-interval="false">
     <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselInCard"
+        <button type="button" data-th-data-bs-target="'#carouselInCard'+${profileDto.profile.id}"
                 th:each="photo,iterationStatus:  ${profileDto.profile.photos}"
                 th:attr="data-bs-slide-to=${iterationStatus.index},
                                 class=${iterationStatus.first}?'active',
@@ -72,22 +72,25 @@
     <div class="carousel-inner">
         <div th:each="photo,iterationStatus:  ${profileDto.profile.photos}" class="carousel-item"
              th:classappend="(${iterationStatus.first} ? 'active': '')">
-            <img class="w-100 rounded mx-auto d-block mb-4"
+            <img class="w-100 rounded mx-auto d-block mb-2"
                  th:src="@{/api/photos/{id}(id=${photo.name})}"
                  th:alt="${iterationStatus.index}">
         </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselInCard"
+    <button class="carousel-control-prev" type="button" data-th-data-bs-target="'#carouselInCard'+${profileDto.profile.id}"
             data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Zurück</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselInCard"
+    <button class="carousel-control-next" type="button" data-th-data-bs-target="'#carouselInCard'+${profileDto.profile.id}"
             data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Vor</span>
     </button>
 </div>
+
+
+
 
 
 <div class="p-2 ms-auto" id="editCard" data-th-fragment="editCard">
