@@ -79,6 +79,14 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.ocpsoft.prettytime/prettytime -->
+    <dependency>
+      <groupId>org.ocpsoft.prettytime</groupId>
+      <artifactId>prettytime</artifactId>
+      <version>5.0.4.Final</version>
+    </dependency>
+
   </dependencies>
 
   <build>
