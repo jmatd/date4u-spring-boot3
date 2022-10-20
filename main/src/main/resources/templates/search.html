@@ -3,7 +3,7 @@
 <head>
     <title>Suche</title>
 </head>
-<div data-th-insert="header"></div>
+<div data-th-replace="fragments/header"></div>
 <body>
 <div class="container">
     <form data-th-object="${search}" data-th-action="@{/search}" method="get">
@@ -79,6 +79,9 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
+                            <a id="viewProfileButton" data-th-href="@{'/profile/'+${profileDto.profile.id}}" class="btn btn-primary" >Profile
+                            </a>
+
                             <div data-th-replace="fragments/cards :: profileCard"></div>
                         </div>
                     </div>

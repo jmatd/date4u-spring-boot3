@@ -1,9 +1,12 @@
 package com.tutego.date4u.mvc.dto;
 
+import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -16,6 +19,7 @@ public final class ProfileDto {
     private final int ageInYears;
     private final String humanReadablyLastSeen;
 
+    private final List<String> photoNamesList;
 
 
     public ProfileDto(Profile profile, String profileImageName) {
@@ -23,6 +27,15 @@ public final class ProfileDto {
         this.profileImageName = profileImageName;
         this.ageInYears = calculateAgeInYears(profile.getBirthdate());
         this.humanReadablyLastSeen = prettyTime.format(profile.getLastseen());
+        this.photoNamesList = profile.getPhotos().stream()
+                .sorted(Comparator
+                        //sorts photos by isProfilePhoto boolean and sets profilePhoto first
+                        .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
+                .map(Photo::getName).toList();
+    }
+
+    public List<String> getPhotoNamesList() {
+        return photoNamesList;
     }
 
     public String getHumanReadablyLastSeen() {

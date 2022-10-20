@@ -5,9 +5,6 @@
 <head data-th-fragement="head">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@5.1.0/dist/quartz/bootstrap.min.css">
-
-</head>
-<head>
     <link rel="stylesheet" href="../css/header.css">
 </head>
 <body>
@@ -34,20 +31,15 @@
             </ul>
 
 
-                   <div class="d-flex" sec:authorize="isAuthenticated()">
-                        <form id="logoutForm" method="POST" th:action="@{/logout}">
-                            <button type="submit" class="btn btn-secondary" value="Logout">Logout</button>
-                        </form>
-                        </div>
-
-
-
-            </ul>
+            <div class="d-flex" sec:authorize="isAuthenticated()">
+                <form id="logoutForm" method="POST" th:action="@{/logout}">
+                    <button type="submit" class="btn btn-secondary" value="Logout">Logout</button>
+                </form>
+            </div>
 
         </div>
     </div>
 </nav>
-
 
 
 </body>
