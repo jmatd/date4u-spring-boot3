@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title data-th-text="${statusCode}+' Fehler'">Fehler</title>
+</head>
+<body>
+<div data-th-replace="fragments/header.html :: head"></div>
+<div class="container-sm text-center p-4">
+
+    <h1>Hier wurde seit
+    <b class="text-danger fw-bolder" data-th-text=" ${statusCode}"></b> Jahren kein Einhorn mehr gesichtet.</h1>
+    <img class="rounded mx-auto d-block" style="max-width:400px" data-th-src="@{/images/errorUnicorns/{random}.png(random=${random})}" alt="unicorn"/>
+
+</div>
+</body>
+</html>
