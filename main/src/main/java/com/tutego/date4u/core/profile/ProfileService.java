@@ -32,6 +32,7 @@ public class ProfileService {
                 .map(Photo::getName)
                 .orElseThrow();
     }
+    public int getGenderById(long id){ return profileRepository.getGenderById(id);}
 
     public ProfileDto getProfileDtoFromProfile(Profile profile) {
         return new ProfileDto(profile, getProfilePictureNameFromProfile(profile));
@@ -42,4 +43,18 @@ public class ProfileService {
                 .map(this::getProfileDtoFromProfile)
                 .collect(Collectors.toList());
     }
+
+    public List<Profile> search(SearchFilter filter) {
+        return profileRepository.search((byte) filter.gender(), filter.attractedToGender()
+                        .byteValue(), filter.minBirthdate(), filter.maxBirthdate(),
+                (short) filter.minHornlength(), (short) filter.maxHornlength());
+    }
+    public List<ProfileDto> searchAndReturnProfileDtos(SearchFilter filter) {
+        List<Profile> searchedProfiles = profileRepository.search((byte) filter.gender(), filter.attractedToGender()
+                        .byteValue(), filter.minBirthdate(), filter.maxBirthdate(),
+                (short) filter.minHornlength(), (short) filter.maxHornlength());
+
+        return getProfileDtosFromProfiles(searchedProfiles);
+    }
+
 }

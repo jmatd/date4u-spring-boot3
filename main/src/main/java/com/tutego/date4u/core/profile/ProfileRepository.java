@@ -36,10 +36,5 @@ public interface ProfileRepository extends JpaRepository<Profile, Long> {
                          short minHornlength, short maxHornlength);
 
 
-    default List<Profile> search(SearchFilter filter) {
-        return search((byte) filter.gender(), filter.attractedToGender()
-                        .byteValue(), filter.minBirthdate(), filter.maxBirthdate(),
-                (short) filter.minHornlength(), (short) filter.maxHornlength());
-    }
 
 }

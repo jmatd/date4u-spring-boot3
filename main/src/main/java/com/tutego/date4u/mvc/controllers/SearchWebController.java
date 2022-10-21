@@ -2,12 +2,9 @@ package com.tutego.date4u.mvc.controllers;
 
 
 import com.tutego.date4u.core.configuration.security.UnicornSecurityUser;
-import com.tutego.date4u.core.profile.ProfileRepository;
 import com.tutego.date4u.core.profile.ProfileService;
 import com.tutego.date4u.core.profile.SearchFilter;
-import com.tutego.date4u.mvc.dto.ProfileDto;
 import com.tutego.date4u.mvc.formdata.SearchFormData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +12,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Controller
 public class SearchWebController {
-    private final ProfileRepository profileRepository;
 
     private final ProfileService profileService;
 
-    public SearchWebController(ProfileRepository profileRepository, ProfileService profileService) {
-        this.profileRepository = profileRepository;
+    public SearchWebController(ProfileService profileService) {
         this.profileService = profileService;
     }
 
@@ -33,10 +27,8 @@ public class SearchWebController {
     public String searchPage(Authentication authentication, Model model, @ModelAttribute SearchFormData searchFormData) {
 
         SearchFilter filter = createSearchFilter(authentication, searchFormData);
-        List<ProfileDto> searchedProfileDtoList = profileService.getProfileDtosFromProfiles(profileRepository.search(filter));
 
-
-        model.addAttribute("profiles", searchedProfileDtoList);
+        model.addAttribute("profiles", profileService.searchAndReturnProfileDtos(filter));
         model.addAttribute("search", searchFormData);
         return "search";
     }
@@ -50,7 +42,7 @@ public class SearchWebController {
         return new SearchFilter(
                 searchFormData.getMinimumHornlength(),
                 searchFormData.getMaximumHornlength(),
-                profileRepository.getGenderById(id),//own
+                profileService.getGenderById(id),//own
                 searchFormData.getGender(),//attractedTo
                 minBirthdate,
                 maxBirthdate
