@@ -2,66 +2,100 @@
 <html>
 <head>
     <title>Suche</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 </head>
-<div data-th-replace="fragments/header"></div>
+<div data-th-replace="fragments/header.html"></div>
 <body>
+<script>
+    $(function () {
+        $("#slider-age-range").slider({
+            range: true,
+            min: 18,
+            max: 99,
+            values: [$('#minAgeInput').val(), $('#maxAgeInput').val()],
+            slide: function (event, ui) {
+                $("#age-amount").text(ui.values[0] + " - " + ui.values[1] + " Jahre");
+                $("#minAgeInput").val(ui.values[0]);
+                $("#maxAgeInput").val(ui.values[1]);
+            }
+        });
+    });
+
+    $(function () {
+        $("#slider-horn-range").slider({
+            range: true,
+            min: 0,
+            max: 99,
+            values: [$('#minHornInput').val(), $('#maxHornInput').val()],
+            slide: function (event, ui) {
+                $("#horn-amount").text(ui.values[0] + " - " + ui.values[1] + " cm");
+                $("#minHornInput").val(ui.values[0]);
+                $("#maxHornInput").val(ui.values[1]);
+            }
+        });
+    });
+
+</script>
+
 <div class="container">
     <form data-th-object="${search}" data-th-action="@{/search}" method="get">
-        <div class="row">
-            <div class="col">
-                <div class="card input">
-                    <h3 class="card-header">Alter</h3>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <label class="col-form-label " for="minAgeInput">Minimum</label>
-                                <input type="text" class="form-control" data-th-field="*{minimumAge}"
-                                       placeholder="Default input"
-                                       id="minAgeInput">
-                            </div>
-                            <div class="col">
-                                <label class="col-form-label " for="maxAgeInput">Maximum</label>
-                                <input type="text" class="form-control" data-th-field="*{maximumAge}"
-                                       placeholder="Default input"
-                                       id="maxAgeInput">
-                            </div>
+
+        <div class="card input p-1">
+
+
+            <div class="card-body p-1">
+                <div class="row">
+
+                    <div class="col mx-2">
+                        <h4>Alter</h4>
+                        <h5 id="age-amount" data-th-text="|*{minimumAge} - *{maximumAge} Jahre|"></h5>
+                        <input type="text" data-th-field="*{minimumAge}" id="minAgeInput" readonly hidden>
+                        <input type="text" data-th-field="*{maximumAge}" id="maxAgeInput" readonly hidden>
+                        <div id="slider-age-range"></div>
+                    </div>
+
+                    <div class="col mx-2">
+                        <h4>Horn Länge</h4>
+                        <h5 id="horn-amount" data-th-text="|*{minimumHornlength} - *{maximumHornlength} cm|"></h5>
+                        <input type="text" data-th-field="*{minimumHornlength}" id="minHornInput" readonly hidden>
+                        <input type="text" data-th-field="*{maximumHornlength}" id="maxHornInput"  readonly hidden>
+                        <div id="slider-horn-range"></div>
+                    </div>
+
+                    <div class="col mx-2">
+                        <h4>Geschlecht</h4>
+                        <div class="btn-group mb-2" role="group" aria-label="Gender radio button group">
+                            <input type="radio" data-th-field="*{gender}" th:value="0" class="btn-check"
+                                   name="btnradio" id="female" autocomplete="off"
+                                   th:checked="*{gender eq 0}">
+                            <label class="btn btn-primary" for="female">Weiblich</label>
+
+                            <input type="radio" data-th-field="*{gender}" th:value="1" class="btn-check"
+                                   name="btnradio" id="male" autocomplete="off" th:checked="*{gender eq 1}">
+                            <label class="btn btn-primary" for="male">Männlich</label>
+
+                            <input type="radio" data-th-field="*{gender}" th:value="2" class="btn-check"
+                                   name="btnradio" id="divers" autocomplete="off"
+                                   th:checked="*{gender eq 2}">
+                            <label class="btn btn-primary" for="divers">Divers</label>
                         </div>
+
+<!--                        <div class="card-body">-->
+<!--                            <label for="genderInput" class="form-label">Gender</label>-->
+<!--                            <input type="text" data-th-field="*{gender}" id="genderInput"-->
+<!--                                   class="form-control">-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card input">
-                    <h3 class="card-header">Horn Länge</h3>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col">
-                                <label class="col-form-label " for="minHornlength">Minimum</label>
-                                <input type="text" class="form-control" data-th-field="*{minimumHornlength}"
-                                       placeholder="Default input"
-                                       id="minHornlength">
-                            </div>
-                            <div class="col">
-                                <label class="col-form-label" for="maxHornlength">Maximum</label>
-                                <input type="text" class="form-control" data-th-field="*{maximumHornlength}"
-                                       placeholder="Default input"
-                                       id="maxHornlength">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card input">
-                    <h3 class="card-header">Geschlecht</h3>
-                    <div class="card-body">
-                        <label for="genderInput" class="form-label">Gender</label>
-                        <input type="text" data-th-field="*{gender}" id="genderInput"
-                               class="form-control">
-                    </div>
-                </div>
+            <div class="card-footer p-1 d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary">Suchen</button>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Suchen</button>
+
     </form>
 </div>
 
@@ -79,7 +113,8 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
-                            <a id="viewProfileButton" data-th-href="@{'/profile/'+${profileDto.profile.id}}" class="btn btn-primary" >Profile
+                            <a id="viewProfileButton" data-th-href="@{'/profile/'+${profileDto.profile.id}}"
+                               class="btn btn-primary">Profile
                             </a>
 
                             <div data-th-replace="fragments/cards :: profileCard"></div>
