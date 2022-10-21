@@ -92,3 +92,6 @@
     right: 0;
     margin: 0.95rem 2rem;
 }
+#editCard .card-header{
+    padding-bottom: 25px;
+}
