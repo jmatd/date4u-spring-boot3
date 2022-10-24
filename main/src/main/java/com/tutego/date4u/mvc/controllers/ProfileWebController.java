@@ -1,10 +1,11 @@
-package com.tutego.date4u.mvc.controllers.profile;
+package com.tutego.date4u.mvc.controllers;
 
 import com.tutego.date4u.core.configuration.security.UnicornSecurityUser;
 import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
 import com.tutego.date4u.core.profile.ProfileRepository;
 import com.tutego.date4u.core.profile.ProfileService;
+import com.tutego.date4u.core.unicorn.UnicornService;
 import com.tutego.date4u.mvc.dto.ProfileDto;
 import com.tutego.date4u.mvc.formdata.ProfileFormData;
 import org.slf4j.Logger;
@@ -27,9 +28,12 @@ public class ProfileWebController {
     private final ProfileRepository profileRepository;
     private final ProfileService profileService;
 
-    public ProfileWebController(ProfileRepository profileRepository, ProfileService profileService) {
+    private final UnicornService unicornService;
+
+    public ProfileWebController(ProfileRepository profileRepository, ProfileService profileService, UnicornService unicornService) {
         this.profileRepository = profileRepository;
         this.profileService = profileService;
+        this.unicornService = unicornService;
     }
 
     @PostMapping("/save")
@@ -56,7 +60,13 @@ public class ProfileWebController {
 
     @RequestMapping("/profile")
     public String ownProfilePage(Authentication authentication) {
-        return "redirect:/profile/" + ((UnicornSecurityUser) authentication.getPrincipal()).getId();
+
+        Profile profile = unicornService.findProfileByUnicornId(((UnicornSecurityUser) authentication.getPrincipal()).getId());
+        if (profile == null) {
+
+        }
+        System.out.println(profile);
+        return "redirect:/profile/" + profile.getId();
     }
 
     @RequestMapping("/profile/{id}")
@@ -67,6 +77,7 @@ public class ProfileWebController {
         Profile profile = optionalProfile.get();
 
         boolean isOwnProfile = userIdMatchesAuthorityId(id, authentication);
+
         ProfileDto profileDto = profileService.getProfileDtoFromProfile(profile);
         if (isOwnProfile) {
             model.addAttribute("profileForm",
@@ -89,9 +100,11 @@ public class ProfileWebController {
         return "profile";
     }
 
-    private static boolean userIdMatchesAuthorityId(long id, Authentication authentication) {
-        UnicornSecurityUser principal = (UnicornSecurityUser) authentication.getPrincipal();
-        return principal.getId() == id;
+    private boolean userIdMatchesAuthorityId(long id, Authentication authentication) {
+        Profile profile = unicornService.findProfileByUnicornId(((UnicornSecurityUser) authentication.getPrincipal()).getId());
+
+
+        return profile.getId() == id;
     }
 
 

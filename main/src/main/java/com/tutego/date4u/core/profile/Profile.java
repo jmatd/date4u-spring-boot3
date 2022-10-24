@@ -145,7 +145,7 @@ public class Profile {
         this.photos = photos;
     }
 
-    public Profile add(Photo photo) {
+    public Profile addPhoto(Photo photo) {
         photos.add(photo);
         return this;
     }

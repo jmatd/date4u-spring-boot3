@@ -31,7 +31,7 @@ public class Photo {
   protected Photo() {
   }
 
-  public Photo( Long id, Profile profile, String name, boolean isProfilePhoto, LocalDateTime created ) {
+  public Photo(Long id, Profile profile, String name, boolean isProfilePhoto, LocalDateTime created ) {
     this.id = id;
     this.profile = profile;
     this.name = name;

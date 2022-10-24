@@ -14,8 +14,9 @@ public class Unicorn {
 
   private String password;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn( name = "profile_fk" )
+
   private Profile profile;
 
   protected Unicorn() {}

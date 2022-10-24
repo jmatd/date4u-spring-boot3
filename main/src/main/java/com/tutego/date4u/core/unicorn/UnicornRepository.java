@@ -1,5 +1,6 @@
 package com.tutego.date4u.core.unicorn;
 
+import com.tutego.date4u.core.profile.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,4 +10,9 @@ public interface UnicornRepository extends JpaRepository<Unicorn, Long> {
 
   @Query( "SELECT u FROM Unicorn u WHERE u.email = :emailAddress" )
   Optional<Unicorn> findUnicornByEmail( String emailAddress );
+
+
+  Optional<Unicorn> findUnicornById(long id);
+
+  boolean existsUnicornByEmail(String email);
 }

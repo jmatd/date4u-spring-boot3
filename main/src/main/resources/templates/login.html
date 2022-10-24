@@ -18,8 +18,12 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             <strong>Well done!</strong> Du hast dich erfolgreich abgemeldet!
         </div>
+        <div th:if="${param.registered}" class="alert alert-dismissible alert-success">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Well done!</strong> Du hast dich erfolgreich registriert! Melde dich nun an.
+        </div>
         <div class="d-flex align-items-center justify-content-center mt-5">
-            <div class="card " style="max-width:30rem">
+            <div class="card " style="width:25rem">
                 <h1 class="card-header">Login</h1>
 
                 <form name="login" th:action="@{/login}" method="post">
@@ -35,6 +39,7 @@
                                        placeholder="Password">
                                 <label for="password">Passwort</label>
                             </div>
+                            <p class="mx-3">Noch keinen Account?  <a  data-th-href="@{'/register'}">Registrieren</a></p>
                             <div class="d-flex align-items-center justify-content-center">
                                 <button type="submit" class="btn btn-primary">Log in</button>
                             </div>

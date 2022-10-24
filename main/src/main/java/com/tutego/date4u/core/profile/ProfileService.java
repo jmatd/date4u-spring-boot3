@@ -4,6 +4,9 @@ import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.mvc.dto.ProfileDto;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +35,10 @@ public class ProfileService {
                 .map(Photo::getName)
                 .orElseThrow();
     }
-    public int getGenderById(long id){ return profileRepository.getGenderById(id);}
+
+    public int getGenderById(long id) {
+        return profileRepository.getGenderById(id);
+    }
 
     public ProfileDto getProfileDtoFromProfile(Profile profile) {
         return new ProfileDto(profile, getProfilePictureNameFromProfile(profile));
@@ -49,6 +55,7 @@ public class ProfileService {
                         .byteValue(), filter.minBirthdate(), filter.maxBirthdate(),
                 (short) filter.minHornlength(), (short) filter.maxHornlength());
     }
+
     public List<ProfileDto> searchAndReturnProfileDtos(SearchFilter filter) {
         List<Profile> searchedProfiles = profileRepository.search((byte) filter.gender(), filter.attractedToGender()
                         .byteValue(), filter.minBirthdate(), filter.maxBirthdate(),
@@ -57,4 +64,12 @@ public class ProfileService {
         return getProfileDtosFromProfiles(searchedProfiles);
     }
 
+    public static Profile createProfileWithDummyData() {
+
+        Profile profile = new Profile("EinBesonderesEinhorn", LocalDate.now(), 0, 0,
+                null, "Erzähl was über dich", LocalDateTime.now());
+        Photo photo = new Photo(null,profile,"dummyPhoto",true, LocalDateTime.now());
+        profile.addPhoto(photo);
+        return profile;
+    }
 }

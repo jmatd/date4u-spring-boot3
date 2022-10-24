@@ -49,7 +49,7 @@ public class ProfileRestController {
 
         Photo photo = new Photo(null, profile, uploadName, false, LocalDateTime.now());
        // photoRepository.save(photo); // could be replaced with cascade = CascadeType.ALL in Profile > photo
-        profile.add(photo);
+        profile.addPhoto(photo);
         profileRepository.save(profile);
 
         return ResponseEntity
