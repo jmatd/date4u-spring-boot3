@@ -1,5 +1,6 @@
 package com.tutego.date4u.mvc.formdata;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.Size;
 public class UnicornFormData {
     @NotNull
     @Size(max=64)
+    @Email
     private String email;
 
     @NotNull

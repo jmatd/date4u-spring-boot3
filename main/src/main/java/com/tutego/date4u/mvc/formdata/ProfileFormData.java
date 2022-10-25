@@ -1,5 +1,7 @@
 package com.tutego.date4u.mvc.formdata;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -9,10 +11,14 @@ import java.util.List;
 public class ProfileFormData {
 
     private long id;
+    @NotNull
     private String nickname;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PastOrPresent
     private LocalDate birthdate;
+    @NotNull
     private int hornlength;
+    @NotNull
     private int gender;
     private Integer attractedToGender;
     private String description;

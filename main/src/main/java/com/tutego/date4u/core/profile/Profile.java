@@ -54,7 +54,7 @@ public class Profile {
     )
     private final Set<Profile> profilesThatLikeMe = new HashSet<>();
 
-    protected Profile() {
+    public Profile() {
     }
 
     public Profile(String nickname, LocalDate birthdate, int hornlength,
