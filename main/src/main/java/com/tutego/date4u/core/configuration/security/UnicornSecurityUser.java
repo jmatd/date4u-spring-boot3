@@ -56,17 +56,16 @@ public class UnicornSecurityUser implements UserDetails {
     }
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.getClass().getName()).append(" [");
-        sb.append("Username=").append(this.getUsername()).append(", ");
-        sb.append("Password=[PROTECTED], ");
-        sb.append("ID=").append(this.getId()).append(", ");
-        sb.append("Enabled=").append(this.isEnabled()).append(", ");
-        sb.append("AccountNonExpired=").append(this.isAccountNonExpired()).append(", ");
-        sb.append("credentialsNonExpired=").append(this.isCredentialsNonExpired()).append(", ");
-        sb.append("AccountNonLocked=").append(this.isAccountNonLocked()).append(", ");
-        sb.append("Granted Authorities=").append(this.getAuthorities()).append("]");
-        return sb.toString();
+        String sb = this.getClass().getName() + " [" +
+                "Username=" + this.getUsername() + ", " +
+                "Password=[PROTECTED], " +
+                "ID=" + this.getId() + ", " +
+                "Enabled=" + this.isEnabled() + ", " +
+                "AccountNonExpired=" + this.isAccountNonExpired() + ", " +
+                "credentialsNonExpired=" + this.isCredentialsNonExpired() + ", " +
+                "AccountNonLocked=" + this.isAccountNonLocked() + ", " +
+                "Granted Authorities=" + this.getAuthorities() + "]";
+        return sb;
     }
 
 }

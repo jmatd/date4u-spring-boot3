@@ -3,7 +3,6 @@ package com.tutego.date4u.mvc.controllers;
 import com.tutego.date4u.core.configuration.security.UnicornSecurityUser;
 import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
-import com.tutego.date4u.core.profile.ProfileRepository;
 import com.tutego.date4u.core.profile.ProfileService;
 import com.tutego.date4u.core.profile.SearchFilter;
 import com.tutego.date4u.core.unicorn.UnicornService;
@@ -14,7 +13,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,36 +24,36 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class ProfileWebController {
     private final Logger log = LoggerFactory.getLogger(getClass());
-    private final ProfileRepository profileRepository;
+
     private final ProfileService profileService;
 
     private final UnicornService unicornService;
 
-    public ProfileWebController(ProfileRepository profileRepository, ProfileService profileService, UnicornService unicornService) {
-        this.profileRepository = profileRepository;
+    public ProfileWebController(ProfileService profileService, UnicornService unicornService) {
         this.profileService = profileService;
         this.unicornService = unicornService;
     }
 
     @PostMapping("/profile/{id}/save")
-    public String saveProfile(@ModelAttribute @Valid ProfileFormData profileFormData, Model model, Authentication authentication, BindingResult bindingResult) {
-        boolean isOwnProfile = isOwnProfile(profileFormData.getId(), authentication);
+    public String saveProfile(@ModelAttribute @Valid ProfileFormData profileFormData,
+                              Model model,
+                              @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser,
+                              BindingResult bindingResult) {
+        boolean isOwnProfile = isOwnProfile(profileFormData.getId(), unicornSecurityUser);
         if (!isOwnProfile)
             throw new AccessDeniedException("User can only edit his own profile"); // Error code 403
 
-        Optional<Profile> optionalProfile = profileRepository.findById(profileFormData.getId());
-        if (optionalProfile.isEmpty()) return "redirect:/";
-        Profile profile = optionalProfile.get();
-
+        Profile profile = profileService.findById(profileFormData.getId());
+        if (profile == null) return "redirect:/";
 
         createProfileModel(model, isOwnProfile, profile);
         if (isUnder18(profileFormData.getBirthdate())) {
-            bindingResult.addError(new FieldError("profileFormData", "birthdate", "Dating ist erst ab 18."));
+            bindingResult.addError(
+                    new FieldError("profileFormData", "birthdate", "Dating ist erst ab 18."));
         }
         if (bindingResult.hasErrors()) {
             return "profile";
@@ -65,21 +64,22 @@ public class ProfileWebController {
 
 
     @RequestMapping("/profile")
-    public String ownProfilePage(Authentication authentication) {
+    public String ownProfilePage(@AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser) {
 
-        return "redirect:/profile/" + ((UnicornSecurityUser) authentication.getPrincipal()).getId();
+        return "redirect:/profile/" + unicornSecurityUser.getId();
     }
 
     @GetMapping("/profile/{id}")
-    public String profilePage(@PathVariable long id, Model model, Authentication authentication) {
+    public String profilePage(@PathVariable long id,
+                              Model model,
+                              @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser) {
 
-        Optional<Profile> optionalProfile = profileRepository.findById(id);
-        if (optionalProfile.isEmpty()) return "redirect:/";
-        Profile profile = optionalProfile.get();
+        Profile profile = profileService.findById(id);
+        if (profile == null) return "redirect:/";
 
-        createProfileModel(model, isOwnProfile(id, authentication), profile);
+        createProfileModel(model, isOwnProfile(id, unicornSecurityUser), profile);
         //fill in formdata on get request
-        if (isOwnProfile(id, authentication))
+        if (isOwnProfile(id, unicornSecurityUser))
             model.addAttribute("profileFormData", getProfileFormDataFromProfile(profile));
         return "profile";
     }
@@ -91,9 +91,11 @@ public class ProfileWebController {
     }
 
     @RequestMapping("/search")
-    public String searchPage(Authentication authentication, Model model, @ModelAttribute SearchFormData searchFormData) {
+    public String searchPage(@AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser,
+                             Model model,
+                             @ModelAttribute SearchFormData searchFormData) {
 
-        SearchFilter filter = createSearchFilter(authentication, searchFormData);
+        SearchFilter filter = createSearchFilter(unicornSecurityUser, searchFormData);
 
         model.addAttribute("profiles", searchAndReturnProfileDtos(filter));
         model.addAttribute("search", searchFormData);
@@ -101,8 +103,8 @@ public class ProfileWebController {
     }
 
 
-    private SearchFilter createSearchFilter(Authentication authentication, SearchFormData searchFormData) {
-        Long id = ((UnicornSecurityUser) authentication.getPrincipal()).getId();
+    private SearchFilter createSearchFilter(@AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser,
+                                            SearchFormData searchFormData) {
 
         LocalDate minBirthdate = LocalDate.now().minusYears(searchFormData.getMinimumAge());
         LocalDate maxBirthdate = minBirthdate.plusYears((searchFormData.getMinimumAge() - searchFormData.getMaximumAge()));
@@ -110,15 +112,15 @@ public class ProfileWebController {
         return new SearchFilter(
                 searchFormData.getMinimumHornlength(),
                 searchFormData.getMaximumHornlength(),
-                profileService.getGenderById(id),//own
+                profileService.getGenderById(unicornSecurityUser.getId()),//own
                 searchFormData.getGender(),//attractedTo
                 minBirthdate,
                 maxBirthdate
         );
     }
 
-    private boolean isOwnProfile(long id, Authentication authentication) {
-        Profile profile = unicornService.findProfileByUnicornId(((UnicornSecurityUser) authentication.getPrincipal()).getId());
+    private boolean isOwnProfile(long id, @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser) {
+        Profile profile = unicornService.findProfileByUnicornId(unicornSecurityUser.getId());
         return profile.getId() == id;
     }
 

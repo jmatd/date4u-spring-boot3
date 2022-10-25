@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileService {
@@ -56,5 +57,11 @@ public class ProfileService {
 
     public void save(Profile profile) {
         profileRepository.save(profile);
+    }
+
+    public Profile findById(long id) {
+        Optional<Profile> optionalProfile = profileRepository.findById(id);
+        if (optionalProfile.isEmpty()) return null;
+        return optionalProfile.get();
     }
 }
