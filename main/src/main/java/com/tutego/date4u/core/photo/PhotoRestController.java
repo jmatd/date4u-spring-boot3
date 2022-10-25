@@ -1,6 +1,5 @@
 package com.tutego.date4u.core.photo;
 
-import com.tutego.date4u.core.profile.ProfileRepository;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

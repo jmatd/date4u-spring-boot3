@@ -28,7 +28,7 @@ public class UnicornService {
         String encodedPassword = passwordEncoder.encode(unicorn.getPassword());
 
         unicorn.setPassword(encodedPassword);
-        unicorn.setProfile(ProfileService.createProfileWithDummyData());
+        unicorn.setProfile(ProfileService.createProfileWithDummyData("SpecialUnicorn"));
         unicornRepository.save(unicorn);
 
     }

@@ -88,11 +88,11 @@
     confirm_password.onkeyup = validatePassword;
 
     //Password hint
-    var passwordElement = document.getElementById("password");
-    var letter = document.getElementById("letter");
-    var capital = document.getElementById("capital");
-    var number = document.getElementById("number");
-    var length = document.getElementById("length");
+    let passwordElement = document.getElementById("password");
+    let letter = document.getElementById("letter");
+    let capital = document.getElementById("capital");
+    let number = document.getElementById("number");
+    let length = document.getElementById("length");
 
     // When the user clicks on the password field, show the message box
     passwordElement.onfocus = function () {
@@ -107,7 +107,7 @@
     // When the user starts to type something inside the password field
     passwordElement.onkeyup = function () {
         // Validate lowercase letters
-        var lowerCaseLetters = /[a-z]/g;
+        let lowerCaseLetters = /[a-z]/g;
         if (passwordElement.value.match(lowerCaseLetters)) {
             letter.classList.remove("invalid");
             letter.classList.add("valid");
@@ -117,7 +117,7 @@
         }
 
         // Validate capital letters
-        var upperCaseLetters = /[A-Z]/g;
+        let upperCaseLetters = /[A-Z]/g;
         if (passwordElement.value.match(upperCaseLetters)) {
             capital.classList.remove("invalid");
             capital.classList.add("valid");
@@ -127,7 +127,7 @@
         }
 
         // Validate numbers
-        var numbers = /[0-9]/g;
+        let numbers = /[0-9]/g;
         if (passwordElement.value.match(numbers)) {
             number.classList.remove("invalid");
             number.classList.add("valid");

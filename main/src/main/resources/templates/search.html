@@ -58,36 +58,37 @@
                     </div>
 
                     <div class="col mx-2">
-                        <h4 >Horn Länge</h4>
-                        <h5 class="mb-1" id="horn-amount" data-th-text="|*{minimumHornlength} - *{maximumHornlength} cm|"></h5>
+                        <h4>Horn Länge</h4>
+                        <h5 class="mb-1" id="horn-amount"
+                            data-th-text="|*{minimumHornlength} - *{maximumHornlength} cm|"></h5>
                         <input type="text" data-th-field="*{minimumHornlength}" id="minHornInput" readonly hidden>
-                        <input type="text" data-th-field="*{maximumHornlength}" id="maxHornInput"  readonly hidden>
+                        <input type="text" data-th-field="*{maximumHornlength}" id="maxHornInput" readonly hidden>
                         <div id="slider-horn-range"></div>
                     </div>
 
                     <div class="col mx-2">
                         <h4>Geschlecht</h4>
                         <div class="btn-group" role="group" aria-label="Gender radio button group">
-                            <input type="radio" data-th-field="*{gender}" th:value="0" class="btn-check"
+                            <input type="radio" data-th-field="*{gender}" data-th-value="0" class="btn-check"
                                    name="btnradio" id="female" autocomplete="off"
-                                   th:checked="*{gender eq 0}">
+                                   data-th-checked="*{gender eq 0}">
                             <label class="btn btn-primary" for="female">Weiblich</label>
 
-                            <input type="radio" data-th-field="*{gender}" th:value="1" class="btn-check"
-                                   name="btnradio" id="male" autocomplete="off" th:checked="*{gender eq 1}">
+                            <input type="radio" data-th-field="*{gender}" data-th-value="1" class="btn-check"
+                                   name="btnradio" id="male" autocomplete="off" data-th-checked="*{gender eq 1}">
                             <label class="btn btn-primary" for="male">Männlich</label>
 
-                            <input type="radio" data-th-field="*{gender}" th:value="2" class="btn-check"
+                            <input type="radio" data-th-field="*{gender}" data-th-value="2" class="btn-check"
                                    name="btnradio" id="divers" autocomplete="off"
-                                   th:checked="*{gender eq 2}">
+                                   data-th-checked="*{gender eq 2}">
                             <label class="btn btn-primary" for="divers">Divers</label>
                         </div>
 
-<!--                        <div class="card-body">-->
-<!--                            <label for="genderInput" class="form-label">Gender</label>-->
-<!--                            <input type="text" data-th-field="*{gender}" id="genderInput"-->
-<!--                                   class="form-control">-->
-<!--                        </div>-->
+                        <!--                        <div class="card-body">-->
+                        <!--                            <label for="genderInput" class="form-label">Gender</label>-->
+                        <!--                            <input type="text" data-th-field="*{gender}" id="genderInput"-->
+                        <!--                                   class="form-control">-->
+                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -124,8 +125,8 @@
             </div>
         </div>
     </div>
+</div>
 
-
-    <div data-th-insert="footer"></div>
+<div data-th-insert="footer"></div>
 </body>
 </html>

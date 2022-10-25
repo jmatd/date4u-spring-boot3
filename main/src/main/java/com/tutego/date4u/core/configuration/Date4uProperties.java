@@ -1,9 +1,6 @@
 package com.tutego.date4u.core.configuration;
 
-import com.tutego.date4u.core.FileSystem;
-import com.tutego.date4u.core.photo.Photo;
-import com.tutego.date4u.core.photo.PhotoService;
-import org.springframework.boot.CommandLineRunner;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -12,24 +9,24 @@ import org.springframework.stereotype.Component;
 public class Date4uProperties {
 
 
-    @Component
-    public class OnStartUp implements CommandLineRunner {
-
-
-        private final FileSystem fileSystem;
-
-        public OnStartUp(FileSystem fileSystem) {
-            this.fileSystem = fileSystem;
-        }
-
-        @Override
-        public void run(String... args) throws Exception {
-//            if(fileSystem.load("dummyPhoto") == null){
-//                fileSystem.store("dummyPhoto.jpg", );
-//            }
-        }
-
-    }
+//    @Component
+//    public class OnStartUp implements CommandLineRunner {
+//
+//
+//        private final FileSystem fileSystem;
+//
+//        public OnStartUp(FileSystem fileSystem) {
+//            this.fileSystem = fileSystem;
+//        }
+//
+//        @Override
+//        public void run(String... args) throws Exception {
+////            if(fileSystem.load("dummyPhoto") == null){
+////                fileSystem.store("dummyPhoto.jpg", );
+////            }
+//        }
+//
+//    }
 
     public static class Filesystem {
         /**

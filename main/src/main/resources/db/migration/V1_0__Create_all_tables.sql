@@ -8,7 +8,7 @@ CREATE TABLE Unicorn (
 CREATE TABLE Profile (
                          id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                          birthdate DATE NOT NULL,
-                         nickname VARCHAR(32) UNIQUE NOT NULL,
+                         nickname VARCHAR(32) NOT NULL,
                          hornlength SMALLINT NOT NULL,
                          gender TINYINT NOT NULL,
                          attracted_to_gender TINYINT,

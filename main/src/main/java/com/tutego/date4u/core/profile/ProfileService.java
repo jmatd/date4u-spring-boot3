@@ -21,7 +21,7 @@ public class ProfileService {
     /**
      * Gets the latest profile Image from Profile
      *
-     * @param profile
+     * @param profile of unicorn
      * @return Name of latest ProfileImage
      */
     public static String getProfilePictureNameFromProfile(Profile profile) {
@@ -45,9 +45,9 @@ public class ProfileService {
     }
 
 
-    public static Profile createProfileWithDummyData() {
+    public static Profile createProfileWithDummyData(String nickname) {
 
-        Profile profile = new Profile("BesonderesEinhorn", LocalDate.now(), 0, 0,
+        Profile profile = new Profile(nickname, LocalDate.now(), 0, 0,
                 null, "Erzähl was über dich", LocalDateTime.now());
         Photo photo = new Photo(null, profile, "dummyPhoto", true, LocalDateTime.now());
         profile.addPhoto(photo);

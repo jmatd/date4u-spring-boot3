@@ -63,18 +63,18 @@
 <div data-th-fragment="carouselInCard" data-th-id="'carouselInCard'+${profileDto.profile.id}" class="carousel slide" data-bs-interval="false">
     <div class="carousel-indicators">
         <button type="button" data-th-data-bs-target="'#carouselInCard'+${profileDto.profile.id}"
-                th:each="photo,iterationStatus:  ${profileDto.photoNamesList}"
-                th:attr="data-bs-slide-to=${iterationStatus.index},
+                data-th-each="photo,iterationStatus:  ${profileDto.photoNamesList}"
+                data-th-attr="data-bs-slide-to=${iterationStatus.index},
                                 class=${iterationStatus.first}?'active',
                                  aria-current=${iterationStatus.first}?'true':''"></button>
     </div>
 
     <div class="carousel-inner">
-        <div th:each="photo,iterationStatus:  ${profileDto.photoNamesList}" class="carousel-item"
-             th:classappend="(${iterationStatus.first} ? 'active': '')">
+        <div data-th-each="photo,iterationStatus:  ${profileDto.photoNamesList}" class="carousel-item"
+             data-th-classappend="(${iterationStatus.first} ? 'active': '')">
             <img class="w-100 rounded mx-auto d-block mb-2"
-                 th:src="@{/api/photos/{id}(id=${photo})}"
-                 th:alt="${iterationStatus.index}">
+                 data-th-src="@{/api/photos/{id}(id=${photo})}"
+                 data-th-alt="${iterationStatus.index}">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-th-data-bs-target="'#carouselInCard'+${profileDto.profile.id}"
@@ -119,22 +119,22 @@
                     <div class="col-sm">
                         <p style=" margin:0; font-size: 1rem;">Interesse an Geschlecht</p>
                         <div class="btn-group mb-2" role="group" aria-label="Gender radio button group">
-                            <input type="radio" data-th-field="*{attractedToGender}" th:value="0"
+                            <input type="radio" data-th-field="*{attractedToGender}" data-th-value="0"
                                    class="btn-check"
                                    name="btnradio" id="attractedToFemale" autocomplete="off"
-                                   th:checked="*{gender eq 0}">
+                                   data-th-checked="*{gender eq 0}">
                             <label class="btn btn-primary" for="attractedToFemale">Weiblich</label>
 
-                            <input type="radio" data-th-field="*{attractedToGender}" th:value="1"
+                            <input type="radio" data-th-field="*{attractedToGender}" data-th-value="1"
                                    class="btn-check"
                                    name="btnradio" id="attractedToMale" autocomplete="off"
-                                   th:checked="*{gender eq 1}">
+                                   data-th-checked="*{gender eq 1}">
                             <label class="btn btn-primary" for="attractedToMale">Männlich</label>
 
-                            <input type="radio" data-th-field="*{attractedToGender}" th:value="2"
+                            <input type="radio" data-th-field="*{attractedToGender}" data-th-value="2"
                                    class="btn-check"
                                    name="btnradio" id="attractedToDivers" autocomplete="off"
-                                   th:checked="*{gender eq 2}">
+                                   data-th-checked="*{gender eq 2}">
                             <label class="btn btn-primary" for="attractedToDivers">Divers</label>
                         </div>
                     </div>
@@ -142,18 +142,18 @@
                     <div class="col-sm">
                         <p style=" margin:0; font-size: 1rem;">Geschlecht</p>
                         <div class="btn-group mb-2" role="group" aria-label="Gender radio button group">
-                            <input type="radio" data-th-field="*{gender}" th:value="0" class="btn-check"
+                            <input type="radio" data-th-field="*{gender}" data-th-value="0" class="btn-check"
                                    name="btnradio" id="female" autocomplete="off"
-                                   th:checked="*{gender eq 0}">
+                                   data-th-checked="*{gender eq 0}">
                             <label class="btn btn-primary" for="female">Weiblich</label>
 
-                            <input type="radio" data-th-field="*{gender}" th:value="1" class="btn-check"
-                                   name="btnradio" id="male" autocomplete="off" th:checked="*{gender eq 1}">
+                            <input type="radio" data-th-field="*{gender}" data-th-value="1" class="btn-check"
+                                   name="btnradio" id="male" autocomplete="off" data-th-checked="*{gender eq 1}">
                             <label class="btn btn-primary" for="male">Männlich</label>
 
-                            <input type="radio" data-th-field="*{gender}" th:value="2" class="btn-check"
+                            <input type="radio" data-th-field="*{gender}" data-th-value="2" class="btn-check"
                                    name="btnradio" id="divers" autocomplete="off"
-                                   th:checked="*{gender eq 2}">
+                                   data-th-checked="*{gender eq 2}">
                             <label class="btn btn-primary" for="divers">Divers</label>
                         </div>
 
@@ -176,8 +176,8 @@
                         <div class="form-floating mb-2">
 
                             <input type="number" data-th-field="*{hornlength}" id="hornlengthInput"
-                                   class="form-control" placeholder="0">
-                            <label for="hornlengthInput" class="form-label" required>Hornlänge</label>
+                                   class="form-control" placeholder="0" required>
+                            <label for="hornlengthInput" class="form-label">Hornlänge</label>
                         </div>
 
 

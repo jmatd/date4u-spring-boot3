@@ -1,4 +1,5 @@
 #navbar {
+    /*noinspection CssNegativeValue*/
     box-shadow: inset 1px 1px rgb(255 255 255 / 20%),
     inset -1px -1px rgb(255 255 255 / 10%), 1px 3px 24px -1px rgb(0 0 0 / 15%) !important;
     background-color: transparent !important;
@@ -61,7 +62,7 @@
 
 .card.profile .card-header {
 
-    padding-bottom: 0px;
+    padding-bottom: 0;
 
 }
 
