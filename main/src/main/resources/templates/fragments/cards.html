@@ -96,7 +96,7 @@
 <div class="p-2 ms-auto" id="editCard" data-th-fragment="editCard">
 
     <div class="card mb-3" >
-        <form data-th-object="${profileForm}" data-th-action="@{/save}" method="post">
+        <form data-th-object="${profileFormData}" data-th-action="@{/profile/{id}/save(id=*{id})}" method="post">
             <input type="text" data-th-field="*{id}" hidden>
             <div class="card-header">
                 <h1>Bearbeiten</h1>
@@ -105,13 +105,13 @@
 
                 <div class="form-floating mb-2">
                     <input type="text" data-th-field="*{nickname}" id="nicknameInput"
-                           class="form-control" placeholder="aSpecialUnicorn">
+                           class="form-control" placeholder="aSpecialUnicorn" required>
                     <label for="nicknameInput" class="form-label">Nickname</label>
                 </div>
 
                 <div class="form-floating mb-2">
                             <textarea class="form-control" maxlength="2048" data-th-field="*{description}"
-                                      id="descriptionInput" rows="4" placeholder="Beschreibung"></textarea>
+                                      id="descriptionInput" rows="4" placeholder="Beschreibung" required></textarea>
                     <label for="descriptionInput">Beschreibung</label>
                 </div>
 
@@ -164,9 +164,12 @@
                 <div class="row">
                     <div class="col-sm">
                         <div class="form-floating mb-2">
+
                             <input type="date" data-th-field="*{birthdate}" id="birthdateInput"
-                                   class="form-control" placeholder="01.01.1900">
+                                   class="form-control" placeholder="01.01.1900"
+                                   data-th-classappend="${#fields.hasErrors('birthdate')}? 'is-invalid': '' " required >
                             <label for="birthdateInput" class="form-label">Geburtsdatum</label>
+                            <div data-th-if="${#fields.hasErrors('birthdate')}" class="invalid-feedback">Mindestalter ist 18 Jahre</div>
                         </div>
                     </div>
                     <div class="col-sm">
@@ -174,7 +177,7 @@
 
                             <input type="number" data-th-field="*{hornlength}" id="hornlengthInput"
                                    class="form-control" placeholder="0">
-                            <label for="hornlengthInput" class="form-label">Hornlänge</label>
+                            <label for="hornlengthInput" class="form-label" required>Hornlänge</label>
                         </div>
 
 

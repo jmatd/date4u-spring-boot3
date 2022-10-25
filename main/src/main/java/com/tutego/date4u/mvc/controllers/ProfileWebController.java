@@ -19,17 +19,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 public class ProfileWebController {
@@ -45,28 +41,27 @@ public class ProfileWebController {
         this.unicornService = unicornService;
     }
 
-    @PostMapping("/save")
-    public String saveProfile(@ModelAttribute @Valid ProfileFormData profileFormData, Authentication authentication, BindingResult bindingResult) {
-        if (!userIdMatchesAuthorityId(profileFormData.getId(), authentication))
+    @PostMapping("/profile/{id}/save")
+    public String saveProfile(@ModelAttribute @Valid ProfileFormData profileFormData, Model model, Authentication authentication, BindingResult bindingResult) {
+        boolean isOwnProfile = isOwnProfile(profileFormData.getId(), authentication);
+        if (!isOwnProfile)
             throw new AccessDeniedException("User can only edit his own profile"); // Error code 403
 
         Optional<Profile> optionalProfile = profileRepository.findById(profileFormData.getId());
-        //TODO error handling
         if (optionalProfile.isEmpty()) return "redirect:/";
         Profile profile = optionalProfile.get();
 
+
+        createProfileModel(model, isOwnProfile, profile);
         if (isUnder18(profileFormData.getBirthdate())) {
-            bindingResult.addError(new FieldError("unicornFormData", "birthdate", "Dating ist erst ab 18."));
+            bindingResult.addError(new FieldError("profileFormData", "birthdate", "Dating ist erst ab 18."));
         }
         if (bindingResult.hasErrors()) {
-            return "redirect:/profile";
+            return "profile";
         }
-
-        profileService.save(setProfileFromProfileFormData(profileFormData,profile));
-
-        return "redirect:/profile";
+        profileService.save(setProfileFromProfileFormData(profileFormData, profile));
+        return "profile";
     }
-
 
 
     @RequestMapping("/profile")
@@ -75,21 +70,24 @@ public class ProfileWebController {
         return "redirect:/profile/" + ((UnicornSecurityUser) authentication.getPrincipal()).getId();
     }
 
-    @RequestMapping("/profile/{id}")
+    @GetMapping("/profile/{id}")
     public String profilePage(@PathVariable long id, Model model, Authentication authentication) {
 
         Optional<Profile> optionalProfile = profileRepository.findById(id);
         if (optionalProfile.isEmpty()) return "redirect:/";
         Profile profile = optionalProfile.get();
-        boolean isOwnProfile = userIdMatchesAuthorityId(id, authentication);
 
+        createProfileModel(model, isOwnProfile(id, authentication), profile);
+        //fill in formdata on get request
+        if (isOwnProfile(id, authentication))
+            model.addAttribute("profileFormData", getProfileFormDataFromProfile(profile));
+        return "profile";
+    }
 
-        if (isOwnProfile) model.addAttribute("profileForm", getProfileFormDataFromProfile(profile));
-
+    public void createProfileModel(Model model, boolean isOwnProfile, Profile profile) {
         model
                 .addAttribute("profileDto", createProfileDtoFromProfile(profile))
                 .addAttribute("isOwnProfile", isOwnProfile);
-        return "profile";
     }
 
     @RequestMapping("/search")
@@ -119,18 +117,16 @@ public class ProfileWebController {
         );
     }
 
-    private boolean userIdMatchesAuthorityId(long id, Authentication authentication) {
+    private boolean isOwnProfile(long id, Authentication authentication) {
         Profile profile = unicornService.findProfileByUnicornId(((UnicornSecurityUser) authentication.getPrincipal()).getId());
-
         return profile.getId() == id;
     }
-
-
 
 
     private boolean isUnder18(LocalDate birthdate) {
         return Period.between(birthdate, LocalDate.now()).getYears() < 18;
     }
+
     private ProfileFormData getProfileFormDataFromProfile(Profile profile) {
         return new ProfileFormData(
                 profile.getId(), profile.getNickname(), profile.getBirthdate(),
@@ -145,8 +141,7 @@ public class ProfileWebController {
     }
 
 
-
-    private Profile setProfileFromProfileFormData(ProfileFormData profileFormData, Profile profile){
+    private Profile setProfileFromProfileFormData(ProfileFormData profileFormData, Profile profile) {
 
         profile.setNickname(profileFormData.getNickname());
         profile.setDescription(profileFormData.getDescription());
@@ -160,13 +155,14 @@ public class ProfileWebController {
     public ProfileDto createProfileDtoFromProfile(Profile profile) {
         return new ProfileDto(profile, ProfileService.getProfilePictureNameFromProfile(profile));
     }
+
     public List<ProfileDto> createProfileDtosFromProfileList(List<Profile> profiles) {
         return profiles.stream()
                 .map(this::createProfileDtoFromProfile)
                 .toList();
     }
 
-    public  List<ProfileDto> searchAndReturnProfileDtos(SearchFilter filter) {
+    public List<ProfileDto> searchAndReturnProfileDtos(SearchFilter filter) {
         return createProfileDtosFromProfileList(profileService.search(filter));
     }
 }
