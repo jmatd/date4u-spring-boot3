@@ -56,7 +56,7 @@ public class UnicornSecurityUser implements UserDetails {
     }
     @Override
     public String toString() {
-        String sb = this.getClass().getName() + " [" +
+        return this.getClass().getName() + " [" +
                 "Username=" + this.getUsername() + ", " +
                 "Password=[PROTECTED], " +
                 "ID=" + this.getId() + ", " +
@@ -65,7 +65,6 @@ public class UnicornSecurityUser implements UserDetails {
                 "credentialsNonExpired=" + this.isCredentialsNonExpired() + ", " +
                 "AccountNonLocked=" + this.isAccountNonLocked() + ", " +
                 "Granted Authorities=" + this.getAuthorities() + "]";
-        return sb;
     }
 
 }

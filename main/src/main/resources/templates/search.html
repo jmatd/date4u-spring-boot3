@@ -52,8 +52,8 @@
                     <div class="col mx-2">
                         <h4>Alter</h4>
                         <h5 class="mb-1" id="age-amount" data-th-text="|*{minimumAge} - *{maximumAge} Jahre|"></h5>
-                        <input type="text" data-th-field="*{minimumAge}" id="minAgeInput" readonly hidden>
-                        <input type="text" data-th-field="*{maximumAge}" id="maxAgeInput" readonly hidden>
+                        <input type="number" data-th-field="*{minimumAge}" id="minAgeInput" readonly hidden>
+                        <input type="number" data-th-field="*{maximumAge}" id="maxAgeInput" readonly hidden>
                         <div id="slider-age-range"></div>
                     </div>
 
@@ -61,8 +61,8 @@
                         <h4>Horn Länge</h4>
                         <h5 class="mb-1" id="horn-amount"
                             data-th-text="|*{minimumHornlength} - *{maximumHornlength} cm|"></h5>
-                        <input type="text" data-th-field="*{minimumHornlength}" id="minHornInput" readonly hidden>
-                        <input type="text" data-th-field="*{maximumHornlength}" id="maxHornInput" readonly hidden>
+                        <input type="number" data-th-field="*{minimumHornlength}" id="minHornInput" readonly hidden>
+                        <input type="number" data-th-field="*{maximumHornlength}" id="maxHornInput" readonly hidden>
                         <div id="slider-horn-range"></div>
                     </div>
 

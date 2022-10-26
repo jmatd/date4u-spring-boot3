@@ -9,18 +9,63 @@
 <div class="container">
 
     <div class="jumbotron">
-        <h1 class="display-4">Willkommen</h1>
-        <h1>
-            <span style="color:#FF0000">H</span><span style="color:#FFAA00">a</span><span style="color:#AAFF00">l</span><span
-                style="color:#00FF00">l</span><span style="color:#00FFAA">o</span> <span
-                style="color:#00AAFF">W</span><span
-                style="color:#0000FF">e</span><span style="color:#AA00FF">l</span><span style="color:#FF00AA">t</span>
-        </h1>
-
-        <p data-th-text="|Es gibt ${totalProfiles} Profile in der Datenbank.|"></p>
-
+        <h1 data-th-text="'Willkommen '  +${profileName}" class="display-4">Willkommen </h1>
+        <h3 data-th-text="|Es warten mehr als ${totalProfiles} Dating-Willige  Einhörnen sehnsüchtig auf dich.|"></h3>
+        <h4 class="mt-2">Unsere Glücklichen Einhörner</h4>
 
     </div>
+    <div class="d-flex flex-row flex-wrap ">
+        <div class="bd-highlight" data-th-each="i:${#numbers.sequence(0,13)}">
+            <img class="rounded mx-auto d-block m-0"
+                 width="160" height="160"
+                 data-th-src="@{@{/images/happyUnicorns/happyUnicorns{number}.png(number=${i})}}"
+                 alt="'Glückliches Einhorn'+ ${i}">
+        </div>
+    </div>
+
+    <h4 class="my-2">Erfahrungen von anderen Einhörnern</h4>
+    <div class="d-flex flex-row bd-highlight mb-3 border">
+        <div class="pr-1 ">
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Ich war nur 2 Jahre auf der Suche bei Date4u und bin jetzt glücklich!</p>
+
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                    anonymes Glückliches Einhorn <cite title="Source Title">(2019)</cite>
+                </figcaption>
+            </figure>
+        </div>
+        <div class="pr-1 ">
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Ich finde Date4u super!</p>
+
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                    ein Einhorn <cite title="Source Title">(2020)</cite>
+                </figcaption>
+            </figure>
+        </div>
+
+        <div class="pr-1 ">
+            <figure class="text-center">
+                <blockquote class="blockquote">
+                    <p class="mb-0">Ich habe hier meinen fünftes Ehe-Einhorn gefunden und bin jetzt endlich
+                        glücklich!</p>
+
+                </blockquote>
+                <figcaption class="blockquote-footer">
+                    ein anderes anonymes Glückliches Einhorn <cite title="Source Title">(2022)</cite>
+                </figcaption>
+            </figure>
+
+        </div>
+
+    </div>
+
+
+</div>
 </div>
 
 

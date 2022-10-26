@@ -5,6 +5,7 @@ import com.tutego.date4u.core.profile.Profile;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
@@ -25,7 +26,7 @@ public class Photo {
   @Column( name = "is_profile_photo" )
   private boolean isProfilePhoto;
 
-  @NotNull @Past
+  @NotNull @PastOrPresent
   private LocalDateTime created;
 
   protected Photo() {
