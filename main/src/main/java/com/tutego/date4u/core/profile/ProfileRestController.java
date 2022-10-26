@@ -29,7 +29,6 @@ public class ProfileRestController {
     public ProfileRestController(PhotoService photoService, ProfileRepository profileRepository) {
         this.photoService = photoService;
         this.profileRepository = profileRepository;
-
     }
 
     @PostMapping("/api/profiles/{id}/photos/")

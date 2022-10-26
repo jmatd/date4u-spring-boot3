@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SecurityService {
 
-    private UnicornService unicornService;
-    private ProfileService profileService;
+    private final UnicornService unicornService;
+    private final ProfileService profileService;
 
     public SecurityService(UnicornService unicornService, ProfileService profileService) {
         this.unicornService = unicornService;

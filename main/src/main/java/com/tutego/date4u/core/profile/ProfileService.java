@@ -1,8 +1,6 @@
 package com.tutego.date4u.core.profile;
 
 import com.tutego.date4u.core.photo.Photo;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -67,11 +65,14 @@ public class ProfileService {
         return optionalProfile.get();
     }
 
-    public void setProfileLastSeenToNowByProfileId(long id){
+    public void setProfileLastSeenToNowByProfileId(long id) {
         Profile profile = findById(id);
         profile.setLastseen(LocalDateTime.now());
+        save(profile);
     }
 
-
+    public long countProfiles() {
+        return profileRepository.count();
+    }
 
 }

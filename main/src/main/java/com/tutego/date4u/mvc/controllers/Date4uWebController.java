@@ -2,16 +2,12 @@ package com.tutego.date4u.mvc.controllers;
 
 import com.tutego.date4u.core.configuration.security.UnicornSecurityUser;
 import com.tutego.date4u.core.profile.Profile;
-import com.tutego.date4u.core.profile.ProfileRepository;
 import com.tutego.date4u.core.profile.ProfileService;
 import com.tutego.date4u.core.unicorn.Unicorn;
-import com.tutego.date4u.core.unicorn.UnicornRepository;
 import com.tutego.date4u.core.unicorn.UnicornService;
+import com.tutego.date4u.mvc.dto.ProfileDtoMapper;
 import com.tutego.date4u.mvc.formdata.UnicornFormData;
 import jakarta.validation.Valid;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,16 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class Date4uWebController {
 
-    private final ProfileRepository profileRepository;
 
-    private final UnicornRepository unicornRepository;
     private final UnicornService unicornService;
 
     private final ProfileService profileService;
 
-    public Date4uWebController(ProfileRepository profileRepository, UnicornRepository unicornRepository, UnicornService unicornService, ProfileService profileService) {
-        this.profileRepository = profileRepository;
-        this.unicornRepository = unicornRepository;
+    public Date4uWebController(UnicornService unicornService, ProfileService profileService) {
         this.unicornService = unicornService;
         this.profileService = profileService;
     }
@@ -55,8 +47,8 @@ public class Date4uWebController {
     @RequestMapping("/")
     public String indexPage(Model model, @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser) {
         Profile profile = profileService.findById(unicornSecurityUser.getId());
-        model.addAttribute("profileName" ,profile.getNickname());
-        long profileCount = profileRepository.count();
+        model.addAttribute("profileDto", ProfileDtoMapper.createProfileDtoFromProfile(profile));
+        long profileCount = profileService.countProfiles();
         model.addAttribute("totalProfiles", profileCount);
         return "index";
     }
@@ -68,7 +60,7 @@ public class Date4uWebController {
 
     @PostMapping("/register")
     public String registerPagePost(Model model, @Valid UnicornFormData unicornFormData, BindingResult bindingResult) {
-        if (unicornRepository.existsUnicornByEmail(unicornFormData.getEmail())) {
+        if (unicornService.doesUnicornEmailAlreadyExist(unicornFormData.getEmail())) {
             bindingResult.addError(new FieldError("unicornFormData", "email", "E-mail bereits in verwendung"));
         }
         if (bindingResult.hasErrors()) {

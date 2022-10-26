@@ -1,10 +1,20 @@
 package com.tutego.date4u.mvc.formdata;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+
 public class SearchFormData {
+
+    @Min(18)
     private int minimumAge = 18;
+    @Max(99)
     private int maximumAge = 99;
+    @Min(0)
     private int minimumHornlength = 0;
-    private int maximumHornlength = 100;
+    @Max(99)
+    private int maximumHornlength = 99;
+    @Min(0)
+    @Max(2)
     private int gender;
 
 

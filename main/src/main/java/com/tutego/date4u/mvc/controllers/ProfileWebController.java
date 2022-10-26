@@ -7,11 +7,10 @@ import com.tutego.date4u.core.profile.ProfileService;
 import com.tutego.date4u.core.profile.SearchFilter;
 import com.tutego.date4u.core.unicorn.UnicornService;
 import com.tutego.date4u.mvc.dto.ProfileDto;
+import com.tutego.date4u.mvc.dto.ProfileDtoMapper;
 import com.tutego.date4u.mvc.formdata.ProfileFormData;
 import com.tutego.date4u.mvc.formdata.SearchFormData;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,6 @@ import java.util.List;
 
 @Controller
 public class ProfileWebController {
-    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final ProfileService profileService;
 
@@ -40,17 +38,19 @@ public class ProfileWebController {
 
     @PostMapping("/profile/{id}/save")
     public String saveProfile(@ModelAttribute @Valid ProfileFormData profileFormData,
+                              BindingResult bindingResult,
                               Model model,
-                              @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser,
-                              BindingResult bindingResult) {
+                              @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser
+                            ) {
+        Profile profile = profileService.findById(profileFormData.getId());
+        if (profile == null) return "redirect:/";
         boolean isOwnProfile = isOwnProfile(profileFormData.getId(), unicornSecurityUser);
+        createProfileModel(model, isOwnProfile, profile);
+
         if (!isOwnProfile)
             throw new AccessDeniedException("User can only edit his own profile"); // Error code 403
 
-        Profile profile = profileService.findById(profileFormData.getId());
-        if (profile == null) return "redirect:/";
 
-        createProfileModel(model, isOwnProfile, profile);
         if (isUnder18(profileFormData.getBirthdate())) {
             bindingResult.addError(
                     new FieldError("profileFormData", "birthdate", "Dating ist erst ab 18."));
@@ -58,6 +58,10 @@ public class ProfileWebController {
         if (bindingResult.hasErrors()) {
             return "profile";
         }
+
+
+
+
         profileService.save(setProfileFromProfileFormData(profileFormData, profile));
         return "profile";
     }
@@ -86,14 +90,14 @@ public class ProfileWebController {
 
     public void createProfileModel(Model model, boolean isOwnProfile, Profile profile) {
         model
-                .addAttribute("profileDto", createProfileDtoFromProfile(profile))
+                .addAttribute("profileDto", ProfileDtoMapper.createProfileDtoFromProfile(profile))
                 .addAttribute("isOwnProfile", isOwnProfile);
     }
 
     @RequestMapping("/search")
     public String searchPage(@AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser,
                              Model model,
-                             @ModelAttribute SearchFormData searchFormData) {
+                             @ModelAttribute @Valid SearchFormData searchFormData) {
 
         SearchFilter filter = createSearchFilter(unicornSecurityUser, searchFormData);
 
@@ -154,17 +158,8 @@ public class ProfileWebController {
         return profile;
     }
 
-    public ProfileDto createProfileDtoFromProfile(Profile profile) {
-        return new ProfileDto(profile, ProfileService.getProfilePictureNameFromProfile(profile));
-    }
-
-    public List<ProfileDto> createProfileDtosFromProfileList(List<Profile> profiles) {
-        return profiles.stream()
-                .map(this::createProfileDtoFromProfile)
-                .toList();
-    }
-
     public List<ProfileDto> searchAndReturnProfileDtos(SearchFilter filter) {
-        return createProfileDtosFromProfileList(profileService.search(filter));
+        return ProfileDtoMapper.createProfileDtosFromProfileList(profileService.search(filter));
     }
+
 }

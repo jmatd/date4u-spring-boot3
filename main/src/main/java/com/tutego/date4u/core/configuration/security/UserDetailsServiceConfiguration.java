@@ -13,10 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserDetailsServiceConfiguration {
 
     @Bean
-    public PasswordEncoder encoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-    @Bean
     UserDetailsService userDetailsService(UnicornRepository unicorns) {
         return email ->
                 unicorns.findUnicornByEmail(email)

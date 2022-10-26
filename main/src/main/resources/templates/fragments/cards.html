@@ -176,8 +176,11 @@
                         <div class="form-floating mb-2">
 
                             <input type="number" data-th-field="*{hornlength}" id="hornlengthInput"
-                                   class="form-control" placeholder="0" required>
+                                   class="form-control" placeholder="0"
+                                   data-th-classappend="${#fields.hasErrors('hornlength')}? 'is-invalid': '' "
+                                   required>
                             <label for="hornlengthInput" class="form-label">Hornlänge</label>
+                            <div data-th-if="${#fields.hasErrors('hornlength')}" class="invalid-feedback">Hornlänge  zwischen 0-99 cm </div>
                         </div>
 
 
