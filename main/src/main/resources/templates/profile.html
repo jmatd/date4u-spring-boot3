@@ -9,19 +9,19 @@
 <!--        <fieldset disabled="disabled"> TODO CONDITIONAL-->
 
 <div class="container mt-2">
-    <div data-th-if="${isOwnProfile}" >
-    <h4>Preview</h4>
-    <ul  class="nav nav-tabs" role="tablist">
+    <div data-th-if="${isOwnProfile}">
+        <h4>Preview</h4>
+        <ul class="nav nav-tabs" role="tablist">
 
-        <li class="nav-item" role="presentation">
-            <a class="nav-link active" data-bs-toggle="tab" href="#card" aria-selected="false" role="tab"
-               tabindex="-1">Card</a>
-        </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" data-bs-toggle="tab" href="#miniCard" aria-selected="true" role="tab">Mini
-                Card</a>
-        </li>
-    </ul>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" data-bs-toggle="tab" href="#card" aria-selected="false" role="tab"
+                   tabindex="-1">Card</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" href="#miniCard" aria-selected="true" role="tab">Mini
+                    Card</a>
+            </li>
+        </ul>
     </div>
     <div class="d-flex flex-row justify-content-center">
         <div class="p-2" id="previewCard">
@@ -38,15 +38,33 @@
         <div data-th-if="${isOwnProfile}" data-th-insert="fragments/cards :: editCard"></div>
 
 
-
     </div>
-    <!--    &lt;!&ndash;            TODO like &ndash;&gt;-->
-    <!--    <ul class="list-group list-group-flush">-->
-    <!--        <li class="list-group-item">LIKE</li>-->
-    <!--        <li class="list-group-item">Dapibus ac facilisis in</li>-->
-    <!--        <li class="list-group-item">Vestibulum at eros</li>-->
-    <!--    </ul>-->
+    <div id="matches" data-th-if="${isOwnProfile}">
+        <h4 class="display-4 mb-1 text-center">Matches</h4>
+        <div class="d-flex flex-wrap justify-content-center">
 
+            <div data-th-each="profileDto: ${matchesDto}" class="p-1">
+                <button type="button" id="miniCardButton" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                        data-th-data-bs-target="'#profile-'+${profileDto.profile.id}">
+                    <div data-th-insert="fragments/cards :: mini-card"></div>
+                </button>
+                <div class="modal fade" data-th-id="'profile-'+${profileDto.profile.id}" tabindex="-1"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <a id="viewProfileButton" data-th-href="@{'/profile/'+${profileDto.profile.id}}"
+                                   class="btn btn-primary">Profile
+                                </a>
+
+                                <div data-th-replace="fragments/cards :: profileCard"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 <div data-th-insert="footer"></div>

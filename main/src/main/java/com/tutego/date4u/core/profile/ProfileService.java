@@ -5,9 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -74,5 +73,23 @@ public class ProfileService {
     public long countProfiles() {
         return profileRepository.count();
     }
+
+    /**
+     * Get Profiles of Matches (both like each other)
+     * @param profile input profile
+     * @return profiles of matches
+     */
+    public static List<Profile> getProfilesOfMatches(Profile profile){
+        List<Profile> list = new ArrayList<>();
+        list.addAll(profile.getProfilesThatILike());
+        list.addAll(profile.getProfilesThatLikeMe());
+
+        Set<Profile> duplicatedProfilesRemovedSet = new HashSet<>();
+
+        return list.stream()
+                .filter(n -> !duplicatedProfilesRemovedSet.add(n))
+                .toList();
+    }
+
 
 }

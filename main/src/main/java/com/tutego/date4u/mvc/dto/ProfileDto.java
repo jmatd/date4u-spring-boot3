@@ -2,13 +2,11 @@ package com.tutego.date4u.mvc.dto;
 
 import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.profile.Profile;
+import com.tutego.date4u.core.profile.ProfileService;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
+import java.util.*;
 
 public final class ProfileDto {
 
@@ -21,6 +19,9 @@ public final class ProfileDto {
 
     private final List<String> photoNamesList;
 
+    // Like eachother
+    private final List<Profile> profilesOfMatches;
+
 
     public ProfileDto(Profile profile, String profileImageName) {
         this.profile = profile;
@@ -32,6 +33,11 @@ public final class ProfileDto {
                         //sorts photos by isProfilePhoto boolean and sets profilePhoto first
                         .comparing(Photo::isProfilePhoto, Comparator.reverseOrder()))
                 .map(Photo::getName).toList();
+        this.profilesOfMatches = ProfileService.getProfilesOfMatches(profile);
+    }
+
+    public List<Profile> getProfilesOfMatches() {
+        return profilesOfMatches;
     }
 
     public List<String> getPhotoNamesList() {
@@ -57,6 +63,8 @@ public final class ProfileDto {
     public int getAgeInYears() {
         return ageInYears;
     }
+
+
 
     @Override
     public boolean equals(Object obj) {

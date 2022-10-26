@@ -41,7 +41,7 @@ public class ProfileWebController {
                               BindingResult bindingResult,
                               Model model,
                               @AuthenticationPrincipal UnicornSecurityUser unicornSecurityUser
-                            ) {
+    ) {
         Profile profile = profileService.findById(profileFormData.getId());
         if (profile == null) return "redirect:/";
         boolean isOwnProfile = isOwnProfile(profileFormData.getId(), unicornSecurityUser);
@@ -58,8 +58,6 @@ public class ProfileWebController {
         if (bindingResult.hasErrors()) {
             return "profile";
         }
-
-
 
 
         profileService.save(setProfileFromProfileFormData(profileFormData, profile));
@@ -89,8 +87,11 @@ public class ProfileWebController {
     }
 
     public void createProfileModel(Model model, boolean isOwnProfile, Profile profile) {
+        ProfileDto profileDtoFromProfile = ProfileDtoMapper.createProfileDtoFromProfile(profile);
         model
-                .addAttribute("profileDto", ProfileDtoMapper.createProfileDtoFromProfile(profile))
+                .addAttribute("profileDto", profileDtoFromProfile)
+                .addAttribute("matchesDto",
+                        ProfileDtoMapper.createProfileDtosFromProfileList(profileDtoFromProfile.getProfilesOfMatches()))
                 .addAttribute("isOwnProfile", isOwnProfile);
     }
 
