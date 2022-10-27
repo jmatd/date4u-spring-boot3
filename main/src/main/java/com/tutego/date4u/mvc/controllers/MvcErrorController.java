@@ -18,8 +18,8 @@ public class MvcErrorController implements ErrorController {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
         if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
-            model.addAttribute("statusCode", statusCode.toString());
+            int statusCode = Integer.parseInt(status.toString());
+            model.addAttribute("statusCode", Integer.toString(statusCode));
         }
         model.addAttribute("random", ThreadLocalRandom.current().nextInt(0, 9 + 1));
         return "error";
