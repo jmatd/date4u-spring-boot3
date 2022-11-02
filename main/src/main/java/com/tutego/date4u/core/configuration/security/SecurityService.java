@@ -21,17 +21,20 @@ public class SecurityService {
     }
 
     @EventListener
-    public void loginEvent(AuthenticationSuccessEvent event){
+    public void loginEvent(AuthenticationSuccessEvent event) {
         UsernamePasswordAuthenticationToken source = (UsernamePasswordAuthenticationToken) event.getSource();
 
-        UnicornSecurityUser unicornSecurityUser = (UnicornSecurityUser) source.getPrincipal();
-        Unicorn unicorn = unicornService.findUnicornByUnicornSecurityUser(unicornSecurityUser);
-        profileService.setProfileLastSeenToNowByProfileId(unicorn.getId());
+        setProfileLastseenFromEventSource(source);
     }
+
     @EventListener
-    public void logoutEvent(LogoutSuccessEvent event){
+    public void logoutEvent(LogoutSuccessEvent event) {
         UsernamePasswordAuthenticationToken source = (UsernamePasswordAuthenticationToken) event.getSource();
 
+        setProfileLastseenFromEventSource(source);
+    }
+
+    private void setProfileLastseenFromEventSource(UsernamePasswordAuthenticationToken source) {
         UnicornSecurityUser unicornSecurityUser = (UnicornSecurityUser) source.getPrincipal();
         Unicorn unicorn = unicornService.findUnicornByUnicornSecurityUser(unicornSecurityUser);
         profileService.setProfileLastSeenToNowByProfileId(unicorn.getId());
